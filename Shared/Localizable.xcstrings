@@ -1,0 +1,1138 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@%@" : {
+      "shouldTranslate" : false
+    },
+    "%lld birthdays updated" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld birthday updated"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld birthdays updated"
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Geburtstag aktualisiert"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Geburtstage aktualisiert"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld days" : {
+      "comment" : "Number of days, compact",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld day"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld days"
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Tag"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Tage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld days before" : {
+      "comment" : "Reminder some days before the birthday",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld day before"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld days before"
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Tag vorher"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Tage vorher"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld hidden" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld versteckt"
+          }
+        }
+      }
+    },
+    "%lld in 7 days" : {
+      "comment" : "Lock Screen: birthdays in the next 7 days",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld in 7 Tagen"
+          }
+        }
+      }
+    },
+    "%lld new birthdays" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld new birthday"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld new birthdays"
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld neuer Geburtstag"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld neue Geburtstage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "1 week before" : {
+      "comment" : "Reminder 7 days before",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 Woche vorher"
+          }
+        }
+      }
+    },
+    "2 weeks before" : {
+      "comment" : "Reminder 14 days before",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 Wochen vorher"
+          }
+        }
+      }
+    },
+    "About" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über"
+          }
+        }
+      }
+    },
+    "Add %lld birthdays" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Add %lld birthday"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Add %lld birthdays"
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Geburtstag übernehmen"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Geburtstage übernehmen"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Add birthday" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geburtstag hinzufügen"
+          }
+        }
+      }
+    },
+    "Add by hand" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Von Hand hinzufügen"
+          }
+        }
+      }
+    },
+    "Added by hand." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Von Hand hinzugefügt."
+          }
+        }
+      }
+    },
+    "Allow access in Settings to import birthdays from your contacts." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erlaube in den Einstellungen den Zugriff, um Geburtstage aus deinen Kontakten zu übernehmen."
+          }
+        }
+      }
+    },
+    "Allow notifications to get a reminder before each birthday." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erlaube Mitteilungen, damit du vor jedem Geburtstag erinnert wirst."
+          }
+        }
+      }
+    },
+    "Applies to every birthday without its own reminders." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gilt für alle Geburtstage ohne eigene Erinnerungen."
+          }
+        }
+      }
+    },
+    "Birthday" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geburtstag"
+          }
+        }
+      }
+    },
+    "Birthday on %@ – turns %lld." : {
+      "comment" : "Notification before the birthday, age known",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geburtstag am %@ – wird %lld."
+          }
+        }
+      }
+    },
+    "Birthday on %@." : {
+      "comment" : "Notification before the birthday, age unknown",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geburtstag am %@."
+          }
+        }
+      }
+    },
+    "Birthday today 🎂" : {
+      "comment" : "Notification subtitle on the birthday",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heute Geburtstag 🎂"
+          }
+        }
+      }
+    },
+    "Birthdays" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geburtstage"
+          }
+        }
+      }
+    },
+    "Birthdays you don’t pick go to Hidden, so they aren’t offered again. You can show them any time." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht ausgewählte Geburtstage kommen zu „Versteckt“ und werden nicht erneut angeboten. Du kannst sie jederzeit wieder einblenden."
+          }
+        }
+      }
+    },
+    "Born on %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geboren am %@"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        }
+      }
+    },
+    "Contacts" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontakte"
+          }
+        }
+      }
+    },
+    "Couldn’t read contacts" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontakte konnten nicht gelesen werden"
+          }
+        }
+      }
+    },
+    "Date and birthdays" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datum und Geburtstage"
+          }
+        }
+      }
+    },
+    "day" : {
+      "comment" : "Under the big number 1 in the small widget",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag"
+          }
+        }
+      }
+    },
+    "days" : {
+      "comment" : "Under the big number of days in the small widget",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tage"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen"
+          }
+        }
+      }
+    },
+    "Delete this birthday?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diesen Geburtstag löschen?"
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig"
+          }
+        }
+      }
+    },
+    "Don’t forget to congratulate." : {
+      "comment" : "Notification on the birthday, age unknown",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht vergessen zu gratulieren."
+          }
+        }
+      }
+    },
+    "Edit" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bearbeiten"
+          }
+        }
+      }
+    },
+    "Edit birthday" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geburtstag bearbeiten"
+          }
+        }
+      }
+    },
+    "Everything is up to date" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alles ist aktuell"
+          }
+        }
+      }
+    },
+    "From your contacts. To change the date, edit the contact and sync again. Hidden birthdays stay hidden when you sync." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aus deinen Kontakten. Um das Datum zu ändern, bearbeite den Kontakt und gleiche erneut ab. Versteckte Geburtstage bleiben beim Abgleich versteckt."
+          }
+        }
+      }
+    },
+    "Hidden" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versteckt"
+          }
+        }
+      }
+    },
+    "Hidden birthdays" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versteckte Geburtstage"
+          }
+        }
+      }
+    },
+    "Hidden birthdays get no reminders and don’t show up in the list or the widgets. Sync doesn’t bring them back." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versteckte Geburtstage bekommen keine Erinnerungen und erscheinen weder in der Liste noch in den Widgets. Der Abgleich holt sie nicht zurück."
+          }
+        }
+      }
+    },
+    "Hide" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verstecken"
+          }
+        }
+      }
+    },
+    "Hide all" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle verstecken"
+          }
+        }
+      }
+    },
+    "Hide birthday" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geburtstag verstecken"
+          }
+        }
+      }
+    },
+    "Import from contacts" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aus Kontakten übernehmen"
+          }
+        }
+      }
+    },
+    "In %lld days" : {
+      "comment" : "Days until a birthday, more than one",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "In %lld day"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "In %lld days"
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "In %lld Tag"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "In %lld Tagen"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Last sync" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Letzter Abgleich"
+          }
+        }
+      }
+    },
+    "Name" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        }
+      }
+    },
+    "Never miss a birthday." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie mehr einen Geburtstag verpassen."
+          }
+        }
+      }
+    },
+    "New birthday" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neuer Geburtstag"
+          }
+        }
+      }
+    },
+    "Next 7 days" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nächste 7 Tage"
+          }
+        }
+      }
+    },
+    "Next birthdays" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nächste Geburtstage"
+          }
+        }
+      }
+    },
+    "No access to contacts" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Zugriff auf Kontakte"
+          }
+        }
+      }
+    },
+    "No birthdays yet" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch keine Geburtstage"
+          }
+        }
+      }
+    },
+    "No hidden birthdays." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine versteckten Geburtstage."
+          }
+        }
+      }
+    },
+    "No reminders" : {
+      "comment" : "A birthday without reminders",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Erinnerungen"
+          }
+        }
+      }
+    },
+    "Notifications are off for this app. Turn them on in Settings." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mitteilungen sind für diese App aus. Schalte sie in den Einstellungen ein."
+          }
+        }
+      }
+    },
+    "On the day" : {
+      "comment" : "Reminder on the birthday itself",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Am Tag selbst"
+          }
+        }
+      }
+    },
+    "Open Settings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen öffnen"
+          }
+        }
+      }
+    },
+    "Open the app to import them from your contacts." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öffne die App, um sie aus deinen Kontakten zu übernehmen."
+          }
+        }
+      }
+    },
+    "Pick the ones you want in your list." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle aus, welche in deine Liste sollen."
+          }
+        }
+      }
+    },
+    "Pick which birthdays from your contacts to keep. You get a reminder a week before and on the day." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle aus, welche Geburtstage aus deinen Kontakten du behalten willst. Du wirst eine Woche vorher und am Tag selbst erinnert."
+          }
+        }
+      }
+    },
+    "Reading contacts …" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontakte werden gelesen …"
+          }
+        }
+      }
+    },
+    "Reminders" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnerungen"
+          }
+        }
+      }
+    },
+    "Reminders are off" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnerungen sind aus"
+          }
+        }
+      }
+    },
+    "Removed, no longer in your contacts: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entfernt, nicht mehr in deinen Kontakten: %@"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sichern"
+          }
+        }
+      }
+    },
+    "Select all" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle auswählen"
+          }
+        }
+      }
+    },
+    "Select none" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine auswählen"
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        }
+      }
+    },
+    "Show" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeigen"
+          }
+        }
+      }
+    },
+    "Show again" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wieder anzeigen"
+          }
+        }
+      }
+    },
+    "Sync only runs when you tap the sync button. Hidden birthdays stay hidden." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Abgleich läuft nur, wenn du auf den Abgleich-Knopf tippst. Versteckte Geburtstage bleiben versteckt."
+          }
+        }
+      }
+    },
+    "Sync with contacts" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit Kontakten abgleichen"
+          }
+        }
+      }
+    },
+    "The app can only see some of your contacts. Allow access to all contacts in Settings to find every birthday." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die App sieht nur einen Teil deiner Kontakte. Erlaube in den Einstellungen den Zugriff auf alle Kontakte, um jeden Geburtstag zu finden."
+          }
+        }
+      }
+    },
+    "The day before" : {
+      "comment" : "Reminder 1 day before",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Am Vortag"
+          }
+        }
+      }
+    },
+    "The next birthdays on the Lock Screen." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die nächsten Geburtstage auf dem Sperrbildschirm."
+          }
+        }
+      }
+    },
+    "The next birthdays with photo and how many days to go." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die nächsten Geburtstage mit Foto und wie viele Tage es noch sind."
+          }
+        }
+      }
+    },
+    "Time" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uhrzeit"
+          }
+        }
+      }
+    },
+    "Today" : {
+      "comment" : "Birthday is today",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heute"
+          }
+        }
+      }
+    },
+    "Today 🎉" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heute 🎉"
+          }
+        }
+      }
+    },
+    "Today’s date above the clock, who has a birthday today and how many are coming up in the next 7 days." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das heutige Datum über der Uhr, wer heute Geburtstag hat und wie viele in den nächsten 7 Tagen anstehen."
+          }
+        }
+      }
+    },
+    "Tomorrow" : {
+      "comment" : "Birthday is tomorrow",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morgen"
+          }
+        }
+      }
+    },
+    "Turn on" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einschalten"
+          }
+        }
+      }
+    },
+    "Turns %lld" : {
+      "comment" : "Age on the next birthday",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird %lld"
+          }
+        }
+      }
+    },
+    "Turns %lld today." : {
+      "comment" : "Notification on the birthday, age known",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird heute %lld."
+          }
+        }
+      }
+    },
+    "Undo" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Widerrufen"
+          }
+        }
+      }
+    },
+    "Use default" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standard verwenden"
+          }
+        }
+      }
+    },
+    "Version" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        }
+      }
+    },
+    "With the year, the app shows how old they turn." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit Jahr zeigt die App, wie alt die Person wird."
+          }
+        }
+      }
+    },
+    "Year known" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jahr bekannt"
+          }
+        }
+      }
+    },
+    "Your contacts stay on this device. Nothing is uploaded, there is no account and nothing is tracked." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Kontakte bleiben auf diesem Gerät. Nichts wird hochgeladen, es gibt kein Konto und kein Tracking."
+          }
+        }
+      }
+    },
+    "Your contacts stay on this device. Nothing is uploaded." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Kontakte bleiben auf diesem Gerät. Nichts wird hochgeladen."
+          }
+        }
+      }
+    },
+    "“%@” hidden" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "„%@“ versteckt"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

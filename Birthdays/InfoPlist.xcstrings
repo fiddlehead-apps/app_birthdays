@@ -1,0 +1,57 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "CFBundleDisplayName" : {
+      "comment" : "App name under the icon",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klar Geburtstage"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klar Birthdays"
+          }
+        }
+      }
+    },
+    "CFBundleName" : {
+      "comment" : "Short app name",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klar Geburtstage"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klar Birthdays"
+          }
+        }
+      }
+    },
+    "NSContactsUsageDescription" : {
+      "comment" : "Why the app asks for the contacts",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liest die Geburtstage deiner Kontakte. Sie bleiben auf diesem Gerät."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reads the birthdays of your contacts. They stay on this device."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
