@@ -1,13 +1,13 @@
-# Klar Birthdays (iOS)
+# Sola Birthdays (iOS)
 
-Auf Deutsch heißt die App **Klar Geburtstage**.
+Auf Deutsch heißt die App **Sola Geburtstage**.
 
 Liste mit den Geburtstagen deiner Kontakte, Erinnerungen und Widgets für Home- und
 Sperrbildschirm. SwiftUI + WidgetKit, keine Abhängigkeiten, iPhone und iPad, ab iOS 18,
 Deutsch und Englisch.
 
 * Kein Server, kein Konto – die Kontakte verlassen das Gerät nie.
-* Gleicher Look wie die anderen Klar-Apps, Akzentfarbe Himbeerrot.
+* Gleicher Look wie die anderen Sola-Apps, Akzentfarbe Himbeerrot.
 
 ## Was die App kann
 
@@ -61,7 +61,7 @@ Eine JSON-Datei plus verkleinerte Kontaktfotos (300 px) im App-Group-Container
 ## Sprachen
 
 Englisch (Ausgangssprache) und Deutsch. Texte in `Shared/Localizable.xcstrings` (App und
-Widgets), App-Name und Kontakt-Hinweis in `Birthdays/InfoPlist.xcstrings`. Wie bei Klar
+Widgets), App-Name und Kontakt-Hinweis in `Birthdays/InfoPlist.xcstrings`. Wie bei Sola
 Slideshow: neue Texte nur als Literal in `Text`/`Button`/`Label` oder über
 `String(localized:)`, Pluralformen über den Catalog, die deutsche Übersetzung im selben
 Schritt eintragen.
@@ -91,7 +91,7 @@ xcodebuild -project Birthdays.xcodeproj -scheme Birthdays -configuration Release
 ```
 
 ```bash
-xcrun devicectl device install app --device 00008150-000655C92E20401C "/tmp/birthdays-device/Build/Products/Release-iphoneos/Klar Birthdays.app"
+xcrun devicectl device install app --device 00008150-000655C92E20401C "/tmp/birthdays-device/Build/Products/Release-iphoneos/Sola Birthdays.app"
 ```
 
 App-Icon neu erzeugen (braucht Pillow):

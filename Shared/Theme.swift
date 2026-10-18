@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Klar palette, light and dark. Same neutrals as the other Klar apps, raspberry as accent.
+/// Sola palette, light and dark. Same neutrals as the other Sola apps, raspberry as accent.
 nonisolated extension Color {
     static let bg = dynamic(0xEEF0F3, 0x121418)
     static let surface = dynamic(0xFFFFFF, 0x1C1F25)

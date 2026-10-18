@@ -1,6 +1,6 @@
 """Erzeugt das App-Icon (1024 px) neu: python3 tools/make_icon.py
 
-Torte mit drei Kerzen auf Himbeerrot, im flachen Stil der anderen Klar-Icons.
+Torte mit drei Kerzen auf Himbeerrot, im flachen Stil der anderen Sola-Icons.
 Gleiches Motiv wie CakeIllustration in der App. Braucht Pillow.
 """
 import math

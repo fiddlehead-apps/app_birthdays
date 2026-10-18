@@ -35,7 +35,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		B10000000000000000000101 /* Klar Birthdays.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Klar Birthdays.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000000000000000000101 /* Sola Birthdays.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sola Birthdays.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B10000000000000000000102 /* BirthdaysWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BirthdaysWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B10000000000000000000111 /* Birthdays-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Birthdays-Info.plist"; sourceTree = "<group>"; };
 		B10000000000000000000112 /* BirthdaysWidget-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BirthdaysWidget-Info.plist"; sourceTree = "<group>"; };
@@ -81,7 +81,7 @@
 		B10000000000000000000011 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B10000000000000000000101 /* Klar Birthdays.app */,
+				B10000000000000000000101 /* Sola Birthdays.app */,
 				B10000000000000000000102 /* BirthdaysWidgetExtension.appex */,
 			);
 			name = Products;
@@ -123,7 +123,7 @@
 			packageProductDependencies = (
 			);
 			productName = Birthdays;
-			productReference = B10000000000000000000101 /* Klar Birthdays.app */;
+			productReference = B10000000000000000000101 /* Sola Birthdays.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B10000000000000000000602 /* BirthdaysWidgetExtension */ = {
@@ -307,7 +307,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/Birthdays-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Klar Birthdays";
+				INFOPLIST_KEY_CFBundleDisplayName = "Sola Birthdays";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Reads the birthdays of your contacts. They stay on this device.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -320,7 +320,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.christophschneider.birthdays;
 				PRODUCT_MODULE_NAME = Birthdays;
-				PRODUCT_NAME = "Klar Birthdays";
+				PRODUCT_NAME = "Sola Birthdays";
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 			};
 			name = Debug;
@@ -334,7 +334,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/Birthdays-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Klar Birthdays";
+				INFOPLIST_KEY_CFBundleDisplayName = "Sola Birthdays";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Reads the birthdays of your contacts. They stay on this device.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -347,7 +347,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.christophschneider.birthdays;
 				PRODUCT_MODULE_NAME = Birthdays;
-				PRODUCT_NAME = "Klar Birthdays";
+				PRODUCT_NAME = "Sola Birthdays";
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 			};
 			name = Release;
@@ -359,7 +359,7 @@
 				CODE_SIGN_ENTITLEMENTS = Config/BirthdaysWidget.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/BirthdaysWidget-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Klar Birthdays";
+				INFOPLIST_KEY_CFBundleDisplayName = "Sola Birthdays";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -378,7 +378,7 @@
 				CODE_SIGN_ENTITLEMENTS = Config/BirthdaysWidget.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/BirthdaysWidget-Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Klar Birthdays";
+				INFOPLIST_KEY_CFBundleDisplayName = "Sola Birthdays";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

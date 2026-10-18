@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// The big filled / outlined buttons, as in the other Klar apps.
+/// The big filled / outlined buttons, as in the other Sola apps.
 struct BigButtonStyle: ButtonStyle {
     var primary: Bool
 
