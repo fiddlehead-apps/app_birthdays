@@ -5,7 +5,8 @@ import UniformTypeIdentifiers
 
 /// The data file and contact photos in the App Group container, shared with the widgets.
 nonisolated enum Storage {
-    static let appGroup = "group.org.christophschneider.birthdays"
+    /// group.<prefix>.birthdays, from the Info.plist (see Config/Config.xcconfig).
+    static let appGroup = Bundle.main.object(forInfoDictionaryKey: "AppGroupID") as? String ?? ""
 
     static var folder: URL {
         let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup)
@@ -81,9 +82,9 @@ nonisolated enum Storage {
     }
 }
 
-/// Opens a birthday from a widget or notification: klarbirthdays://birthday/<id>
+/// Opens a birthday from a widget or notification: solabirthdays://birthday/<id>
 nonisolated enum DeepLink {
-    static let scheme = "klarbirthdays"
+    static let scheme = "solabirthdays"
 
     static func url(_ id: UUID) -> URL { URL(string: "\(scheme)://birthday/\(id.uuidString)")! }
 

@@ -1,0 +1,29 @@
+// Sola Birthdays build configuration, the base for every target.
+//
+// Identifiers derive from BUNDLE_ID_PREFIX:
+//   App:        $(BUNDLE_ID_PREFIX).birthdays
+//   Widget:     $(BUNDLE_ID_PREFIX).birthdays.widget
+//   App Group:  group.$(BUNDLE_ID_PREFIX).birthdays
+//   iCloud:     iCloud.$(BUNDLE_ID_PREFIX).birthdays
+//
+// Local overrides go into sola-local.xcconfig next to the repos (not in git); every Sola
+// app reads it if it exists. Typical content:
+//   SOLA_TEAM = ABCDE12345     // the paid team that publishes the apps
+//   SOLA_ICLOUD = YES          // build with iCloud sync (needs a paid team)
+
+BUNDLE_ID_PREFIX = eu.fiddlehead.sola
+SOLA_TEAM = Z4Z62632W2
+DEVELOPMENT_TEAM = $(SOLA_TEAM)
+
+// iCloud sync. NO: no iCloud or push entitlements, so the free Personal Team can sign the app
+// and the sync setting says it isn't available in this build. YES: CloudKit container
+// iCloud.$(BUNDLE_ID_PREFIX).birthdays and push, which only a paid developer team can sign.
+SOLA_ICLOUD = NO
+SOLA_CLOUDKIT_CONTAINER_NO =
+SOLA_CLOUDKIT_CONTAINER_YES = iCloud.$(BUNDLE_ID_PREFIX).birthdays
+SOLA_CLOUDKIT_CONTAINER = $(SOLA_CLOUDKIT_CONTAINER_$(SOLA_ICLOUD))
+SOLA_APP_ENTITLEMENTS_NO = Config/SolaBirthdays.entitlements
+SOLA_APP_ENTITLEMENTS_YES = Config/SolaBirthdays-iCloud.entitlements
+SOLA_APP_ENTITLEMENTS = $(SOLA_APP_ENTITLEMENTS_$(SOLA_ICLOUD))
+
+#include? "../../sola-local.xcconfig"

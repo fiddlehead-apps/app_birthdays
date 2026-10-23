@@ -3,8 +3,11 @@ import Foundation
 /// One birthday. Comes from a contact, or was added by hand.
 nonisolated struct Birthday: Codable, Identifiable, Hashable, Sendable {
     var id = UUID()
-    /// `CNContact.identifier`; nil for birthdays added by hand.
+    /// `CNContact.identifier` on this device. Contact IDs differ between devices, so this one
+    /// isn't synced: birthdays from iCloud start without it and get matched by name and date.
     var contactID: String?
+    /// Came from the contacts (true) or was added by hand.
+    var fromContacts: Bool
     var name: String
     /// First name or nickname, for tight spots like the widgets.
     var shortName: String
@@ -17,9 +20,12 @@ nonisolated struct Birthday: Codable, Identifiable, Hashable, Sendable {
     var hidden = false
     /// Days before the birthday to remind, 0 = on the day. nil = use the default.
     var reminders: [Int]?
+    /// Last change of a synced field, for resolving conflicts with iCloud.
+    var modified = Date()
 
     init(contactID: String? = nil, name: String, shortName: String, month: Int, day: Int, year: Int?) {
         self.contactID = contactID
+        fromContacts = contactID != nil
         self.name = name
         self.shortName = shortName
         self.month = month
@@ -32,6 +38,7 @@ nonisolated struct Birthday: Codable, Identifiable, Hashable, Sendable {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         id = try c.decode(UUID.self, forKey: .id)
         contactID = try c.decodeIfPresent(String.self, forKey: .contactID)
+        fromContacts = try c.decodeIfPresent(Bool.self, forKey: .fromContacts) ?? (contactID != nil)
         name = try c.decode(String.self, forKey: .name)
         shortName = try c.decodeIfPresent(String.self, forKey: .shortName) ?? name
         month = try c.decode(Int.self, forKey: .month)
@@ -40,9 +47,15 @@ nonisolated struct Birthday: Codable, Identifiable, Hashable, Sendable {
         hasPhoto = try c.decodeIfPresent(Bool.self, forKey: .hasPhoto) ?? false
         hidden = try c.decodeIfPresent(Bool.self, forKey: .hidden) ?? false
         reminders = try c.decodeIfPresent([Int].self, forKey: .reminders)
+        modified = try c.decodeIfPresent(Date.self, forKey: .modified) ?? .distantPast
     }
 
-    var isManual: Bool { contactID == nil }
+    var isManual: Bool { !fromContacts }
+
+    /// Same person and day, for matching birthdays across devices.
+    func matches(name other: String, month m: Int, day d: Int) -> Bool {
+        month == m && day == d && name.compare(other, options: [.caseInsensitive, .diacriticInsensitive]) == .orderedSame
+    }
 }
 
 /// Everything the app stores. One JSON file in the App Group, read by the widgets too.
@@ -51,7 +64,10 @@ nonisolated struct AppData: Codable, Sendable {
     var defaultReminders: [Int] = [7, 0]
     var reminderHour = 9
     var reminderMinute = 0
+    /// Last contacts sync on this device.
     var lastSync: Date?
+    /// Last change of the reminder settings, for resolving conflicts with iCloud.
+    var settingsModified = Date.distantPast
 
     init() {}
 
@@ -62,6 +78,7 @@ nonisolated struct AppData: Codable, Sendable {
         reminderHour = try c.decodeIfPresent(Int.self, forKey: .reminderHour) ?? 9
         reminderMinute = try c.decodeIfPresent(Int.self, forKey: .reminderMinute) ?? 0
         lastSync = try c.decodeIfPresent(Date.self, forKey: .lastSync)
+        settingsModified = try c.decodeIfPresent(Date.self, forKey: .settingsModified) ?? .distantPast
     }
 
     func reminders(for b: Birthday) -> [Int] { b.reminders ?? defaultReminders }

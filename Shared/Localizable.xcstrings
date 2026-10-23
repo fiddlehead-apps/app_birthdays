@@ -412,6 +412,17 @@
         }
       }
     },
+    "Couldn’t delete the data in iCloud: %@" : {
+      "comment" : "Turning off iCloud sync with deletion failed; %@ is the system's error message",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Daten in iCloud konnten nicht gelöscht werden: %@"
+          }
+        }
+      }
+    },
     "Couldn’t read contacts" : {
       "localizations" : {
         "de" : {
@@ -460,6 +471,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Löschen"
+          }
+        }
+      }
+    },
+    "Delete data from iCloud" : {
+      "comment" : "Button when turning off iCloud sync: also remove the copy in iCloud",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten in iCloud löschen"
           }
         }
       }
@@ -521,6 +543,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alles ist aktuell"
+          }
+        }
+      }
+    },
+    "Everything stays on this device either way. Your other devices keep their copy too and stop syncing if you delete it." : {
+      "comment" : "Message of the dialog when turning off iCloud sync",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auf diesem Gerät bleibt in jedem Fall alles erhalten. Deine anderen Geräte behalten ihre Kopie ebenfalls und hören auf zu synchronisieren, wenn du sie löschst."
           }
         }
       }
@@ -595,6 +628,50 @@
         }
       }
     },
+    "iCloud" : {
+      "comment" : "Settings section header",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud"
+          }
+        }
+      }
+    },
+    "iCloud is restricted on this device." : {
+      "comment" : "Turning on iCloud sync when Screen Time or a profile blocks iCloud",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud ist auf diesem Gerät eingeschränkt."
+          }
+        }
+      }
+    },
+    "iCloud isn’t available right now. Try again later." : {
+      "comment" : "Turning on iCloud sync failed for another reason",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud ist gerade nicht erreichbar. Versuch es später noch einmal."
+          }
+        }
+      }
+    },
+    "iCloud sync" : {
+      "comment" : "Settings switch, off by default",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud-Sync"
+          }
+        }
+      }
+    },
     "Import from contacts" : {
       "localizations" : {
         "de" : {
@@ -642,6 +719,17 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "Keep data in iCloud" : {
+      "comment" : "Button when turning off iCloud sync: leave the copy in iCloud",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten in iCloud behalten"
           }
         }
       }
@@ -747,12 +835,45 @@
         }
       }
     },
+    "Not synced" : {
+      "comment" : "iCloud sync status when there is a problem (explained below the switch)",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht synchronisiert"
+          }
+        }
+      }
+    },
     "Notifications are off for this app. Turn them on in Settings." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mitteilungen sind für diese App aus. Schalte sie in den Einstellungen ein."
+          }
+        }
+      }
+    },
+    "Off" : {
+      "comment" : "iCloud sync in a build without iCloud",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aus"
+          }
+        }
+      }
+    },
+    "Off unless you turn it on. Then your birthdays, their photos and the reminder settings sync through your private iCloud database to your devices with the same Apple Account. Each device sends its own reminders." : {
+      "comment" : "Explains the iCloud sync switch in the settings",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aus, solange du es nicht einschaltest. Dann werden deine Geburtstage, ihre Fotos und die Erinnerungseinstellungen über deine private iCloud-Datenbank mit deinen Geräten mit demselben Apple Account abgeglichen. Jedes Gerät erinnert dich selbst."
           }
         }
       }
@@ -908,6 +1029,28 @@
         }
       }
     },
+    "Sign in to iCloud in the Settings app first." : {
+      "comment" : "Turning on iCloud sync without an iCloud account",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melde dich zuerst in der Einstellungen-App bei iCloud an."
+          }
+        }
+      }
+    },
+    "Status" : {
+      "comment" : "iCloud sync status row",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        }
+      }
+    },
     "Sync only runs when you tap the sync button. Hidden birthdays stay hidden." : {
       "localizations" : {
         "de" : {
@@ -928,12 +1071,56 @@
         }
       }
     },
+    "Synced %@" : {
+      "comment" : "iCloud sync status; %@ is a relative time like '5 minutes ago'",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Synchronisiert %@"
+          }
+        }
+      }
+    },
+    "Synced with your iCloud. Nothing else is uploaded." : {
+      "comment" : "Footer of the empty list while iCloud sync is on",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit deiner iCloud abgeglichen. Sonst wird nichts hochgeladen."
+          }
+        }
+      }
+    },
+    "Syncing…" : {
+      "comment" : "iCloud sync status",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird synchronisiert …"
+          }
+        }
+      }
+    },
     "The app can only see some of your contacts. Allow access to all contacts in Settings to find every birthday." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Die App sieht nur einen Teil deiner Kontakte. Erlaube in den Einstellungen den Zugriff auf alle Kontakte, um jeden Geburtstag zu finden."
+          }
+        }
+      }
+    },
+    "The data in iCloud was deleted, so sync was turned off. Everything is still on this device." : {
+      "comment" : "Another device or the iCloud settings deleted the app's iCloud data",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Daten in iCloud wurden gelöscht, deshalb ist der Sync jetzt aus. Auf diesem Gerät ist noch alles da."
           }
         }
       }
@@ -945,6 +1132,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Am Vortag"
+          }
+        }
+      }
+    },
+    "The iCloud account changed, so sync was turned off. Everything is still on this device." : {
+      "comment" : "Another Apple Account signed in",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der iCloud-Account hat gewechselt, deshalb ist der Sync jetzt aus. Auf diesem Gerät ist noch alles da."
           }
         }
       }
@@ -965,6 +1163,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Die nächsten Geburtstage mit Foto und wie viele Tage es noch sind."
+          }
+        }
+      }
+    },
+    "This build keeps everything on this device and can’t sync." : {
+      "comment" : "Footer in builds without iCloud (developer builds)",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieser Build speichert alles nur auf diesem Gerät und kann nicht synchronisieren."
           }
         }
       }
@@ -1021,6 +1230,17 @@
         }
       }
     },
+    "Turn off iCloud sync?" : {
+      "comment" : "Title of the dialog when turning off iCloud sync",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud-Sync ausschalten?"
+          }
+        }
+      }
+    },
     "Turn on" : {
       "localizations" : {
         "de" : {
@@ -1063,6 +1283,17 @@
         }
       }
     },
+    "Up to date" : {
+      "comment" : "iCloud sync status",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuell"
+          }
+        }
+      }
+    },
     "Use default" : {
       "localizations" : {
         "de" : {
@@ -1079,6 +1310,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Version"
+          }
+        }
+      }
+    },
+    "Waiting for a connection to iCloud." : {
+      "comment" : "iCloud sync status while offline",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warte auf eine Verbindung zu iCloud."
           }
         }
       }
@@ -1103,12 +1345,13 @@
         }
       }
     },
-    "Your contacts stay on this device. Nothing is uploaded, there is no account and nothing is tracked." : {
+    "You signed out of iCloud, so sync was turned off. Everything is still on this device." : {
+      "comment" : "The user signed out of iCloud while sync was on",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deine Kontakte bleiben auf diesem Gerät. Nichts wird hochgeladen, es gibt kein Konto und kein Tracking."
+            "value" : "Du hast dich von iCloud abgemeldet, deshalb ist der Sync jetzt aus. Auf diesem Gerät ist noch alles da."
           }
         }
       }
@@ -1119,6 +1362,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Deine Kontakte bleiben auf diesem Gerät. Nichts wird hochgeladen."
+          }
+        }
+      }
+    },
+    "Your contacts stay on your devices. Nothing goes to a server of ours, there is no account and nothing is tracked." : {
+      "comment" : "Privacy note in the settings",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Kontakte bleiben auf deinen Geräten. Nichts geht an einen Server von uns, es gibt kein Konto und kein Tracking."
+          }
+        }
+      }
+    },
+    "Your iCloud storage is full." : {
+      "comment" : "iCloud sync problem",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dein iCloud-Speicher ist voll."
           }
         }
       }
