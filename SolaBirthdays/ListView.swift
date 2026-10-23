@@ -164,7 +164,7 @@ struct ListView: View {
                 }
                 .buttonStyle(.borderless)
             }
-            Text("Your contacts stay on this device. Nothing is uploaded.")
+            Text(store.cloud.isOn ? "Synced with your iCloud. Nothing else is uploaded." : "Your contacts stay on this device. Nothing is uploaded.")
                 .font(.system(size: 14))
                 .foregroundStyle(Color.muted)
         }

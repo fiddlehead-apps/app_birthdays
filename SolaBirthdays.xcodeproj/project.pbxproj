@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B10000000000000000000301 /* BirthdaysWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B10000000000000000000102 /* BirthdaysWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B10000000000000000000301 /* SolaBirthdaysWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B10000000000000000000102 /* SolaBirthdaysWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -16,7 +16,7 @@
 			containerPortal = B10000000000000000000001 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B10000000000000000000602;
-			remoteInfo = BirthdaysWidgetExtension;
+			remoteInfo = SolaBirthdaysWidgetExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -27,7 +27,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				B10000000000000000000301 /* BirthdaysWidgetExtension.appex in Embed Foundation Extensions */,
+				B10000000000000000000301 /* SolaBirthdaysWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -35,18 +35,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B10000000000000000000110 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		B10000000000000000000115 /* SolaBirthdays-iCloud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SolaBirthdays-iCloud.entitlements"; sourceTree = "<group>"; };
 		B10000000000000000000101 /* Sola Birthdays.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sola Birthdays.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B10000000000000000000102 /* BirthdaysWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BirthdaysWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		B10000000000000000000111 /* Birthdays-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Birthdays-Info.plist"; sourceTree = "<group>"; };
-		B10000000000000000000112 /* BirthdaysWidget-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BirthdaysWidget-Info.plist"; sourceTree = "<group>"; };
-		B10000000000000000000113 /* Birthdays.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Birthdays.entitlements; sourceTree = "<group>"; };
-		B10000000000000000000114 /* BirthdaysWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BirthdaysWidget.entitlements; sourceTree = "<group>"; };
+		B10000000000000000000102 /* SolaBirthdaysWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SolaBirthdaysWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000000000000000000111 /* SolaBirthdays-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SolaBirthdays-Info.plist"; sourceTree = "<group>"; };
+		B10000000000000000000112 /* SolaBirthdaysWidget-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SolaBirthdaysWidget-Info.plist"; sourceTree = "<group>"; };
+		B10000000000000000000113 /* SolaBirthdays.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SolaBirthdays.entitlements; sourceTree = "<group>"; };
+		B10000000000000000000114 /* SolaBirthdaysWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SolaBirthdaysWidget.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		B10000000000000000000201 /* Birthdays */ = {isa = PBXFileSystemSynchronizedRootGroup; path = Birthdays; sourceTree = "<group>"; };
+		B10000000000000000000201 /* SolaBirthdays */ = {isa = PBXFileSystemSynchronizedRootGroup; path = SolaBirthdays; sourceTree = "<group>"; };
 		B10000000000000000000202 /* Shared */ = {isa = PBXFileSystemSynchronizedRootGroup; path = Shared; sourceTree = "<group>"; };
-		B10000000000000000000203 /* BirthdaysWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; path = BirthdaysWidget; sourceTree = "<group>"; };
+		B10000000000000000000203 /* SolaBirthdaysWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; path = SolaBirthdaysWidget; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,8 +72,8 @@
 		B10000000000000000000010 = {
 			isa = PBXGroup;
 			children = (
-				B10000000000000000000201 /* Birthdays */,
-				B10000000000000000000203 /* BirthdaysWidget */,
+				B10000000000000000000201 /* SolaBirthdays */,
+				B10000000000000000000203 /* SolaBirthdaysWidget */,
 				B10000000000000000000202 /* Shared */,
 				B10000000000000000000012 /* Config */,
 				B10000000000000000000011 /* Products */,
@@ -82,7 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				B10000000000000000000101 /* Sola Birthdays.app */,
-				B10000000000000000000102 /* BirthdaysWidgetExtension.appex */,
+				B10000000000000000000102 /* SolaBirthdaysWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -90,10 +92,12 @@
 		B10000000000000000000012 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				B10000000000000000000111 /* Birthdays-Info.plist */,
-				B10000000000000000000112 /* BirthdaysWidget-Info.plist */,
-				B10000000000000000000113 /* Birthdays.entitlements */,
-				B10000000000000000000114 /* BirthdaysWidget.entitlements */,
+				B10000000000000000000110 /* Config.xcconfig */,
+				B10000000000000000000115 /* SolaBirthdays-iCloud.entitlements */,
+				B10000000000000000000111 /* SolaBirthdays-Info.plist */,
+				B10000000000000000000112 /* SolaBirthdaysWidget-Info.plist */,
+				B10000000000000000000113 /* SolaBirthdays.entitlements */,
+				B10000000000000000000114 /* SolaBirthdaysWidget.entitlements */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -101,9 +105,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B10000000000000000000601 /* Birthdays */ = {
+		B10000000000000000000601 /* SolaBirthdays */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B10000000000000000000902 /* Build configuration list for PBXNativeTarget "Birthdays" */;
+			buildConfigurationList = B10000000000000000000902 /* Build configuration list for PBXNativeTarget "SolaBirthdays" */;
 			buildPhases = (
 				B10000000000000000000801 /* Sources */,
 				B10000000000000000000701 /* Frameworks */,
@@ -116,19 +120,19 @@
 				B10000000000000000000A01 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				B10000000000000000000201 /* Birthdays */,
+				B10000000000000000000201 /* SolaBirthdays */,
 				B10000000000000000000202 /* Shared */,
 			);
-			name = Birthdays;
+			name = SolaBirthdays;
 			packageProductDependencies = (
 			);
-			productName = Birthdays;
+			productName = SolaBirthdays;
 			productReference = B10000000000000000000101 /* Sola Birthdays.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B10000000000000000000602 /* BirthdaysWidgetExtension */ = {
+		B10000000000000000000602 /* SolaBirthdaysWidgetExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B10000000000000000000903 /* Build configuration list for PBXNativeTarget "BirthdaysWidgetExtension" */;
+			buildConfigurationList = B10000000000000000000903 /* Build configuration list for PBXNativeTarget "SolaBirthdaysWidgetExtension" */;
 			buildPhases = (
 				B10000000000000000000802 /* Sources */,
 				B10000000000000000000702 /* Frameworks */,
@@ -139,14 +143,14 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				B10000000000000000000203 /* BirthdaysWidget */,
+				B10000000000000000000203 /* SolaBirthdaysWidget */,
 				B10000000000000000000202 /* Shared */,
 			);
-			name = BirthdaysWidgetExtension;
+			name = SolaBirthdaysWidgetExtension;
 			packageProductDependencies = (
 			);
-			productName = BirthdaysWidgetExtension;
-			productReference = B10000000000000000000102 /* BirthdaysWidgetExtension.appex */;
+			productName = SolaBirthdaysWidgetExtension;
+			productReference = B10000000000000000000102 /* SolaBirthdaysWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -167,7 +171,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B10000000000000000000901 /* Build configuration list for PBXProject "Birthdays" */;
+			buildConfigurationList = B10000000000000000000901 /* Build configuration list for PBXProject "SolaBirthdays" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -182,8 +186,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B10000000000000000000601 /* Birthdays */,
-				B10000000000000000000602 /* BirthdaysWidgetExtension */,
+				B10000000000000000000601 /* SolaBirthdays */,
+				B10000000000000000000602 /* SolaBirthdaysWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -225,7 +229,7 @@
 /* Begin PBXTargetDependency section */
 		B10000000000000000000A01 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B10000000000000000000602 /* BirthdaysWidgetExtension */;
+			target = B10000000000000000000602 /* SolaBirthdaysWidgetExtension */;
 			targetProxy = B10000000000000000000401 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -233,6 +237,7 @@
 /* Begin XCBuildConfiguration section */
 		B10000000000000000000B01 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B10000000000000000000110 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -248,7 +253,6 @@
 				SWIFT_VERSION = 6.0;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				DEVELOPMENT_TEAM = Z4Z62632W2;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				MARKETING_VERSION = 1.0;
@@ -270,6 +274,7 @@
 		};
 		B10000000000000000000B02 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B10000000000000000000110 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -285,7 +290,6 @@
 				SWIFT_VERSION = 6.0;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				DEVELOPMENT_TEAM = Z4Z62632W2;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				MARKETING_VERSION = 1.0;
@@ -303,13 +307,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Config/Birthdays.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "$(SOLA_APP_ENTITLEMENTS)";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Config/Birthdays-Info.plist";
+				INFOPLIST_FILE = "Config/SolaBirthdays-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Sola Birthdays";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Reads the birthdays of your contacts. They stay on this device.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Reads the birthdays of your contacts. They only leave this device if you turn on iCloud sync.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -318,8 +322,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.christophschneider.birthdays;
-				PRODUCT_MODULE_NAME = Birthdays;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID_PREFIX).birthdays";
+				PRODUCT_MODULE_NAME = SolaBirthdays;
 				PRODUCT_NAME = "Sola Birthdays";
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 			};
@@ -330,13 +334,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Config/Birthdays.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "$(SOLA_APP_ENTITLEMENTS)";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Config/Birthdays-Info.plist";
+				INFOPLIST_FILE = "Config/SolaBirthdays-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Sola Birthdays";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
-				INFOPLIST_KEY_NSContactsUsageDescription = "Reads the birthdays of your contacts. They stay on this device.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Reads the birthdays of your contacts. They only leave this device if you turn on iCloud sync.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -345,8 +349,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.christophschneider.birthdays;
-				PRODUCT_MODULE_NAME = Birthdays;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID_PREFIX).birthdays";
+				PRODUCT_MODULE_NAME = SolaBirthdays;
 				PRODUCT_NAME = "Sola Birthdays";
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 			};
@@ -356,16 +360,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Config/BirthdaysWidget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Config/SolaBirthdaysWidget.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Config/BirthdaysWidget-Info.plist";
+				INFOPLIST_FILE = "Config/SolaBirthdaysWidget-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Sola Birthdays";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.christophschneider.birthdays.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID_PREFIX).birthdays.widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -375,16 +379,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Config/BirthdaysWidget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Config/SolaBirthdaysWidget.entitlements;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Config/BirthdaysWidget-Info.plist";
+				INFOPLIST_FILE = "Config/SolaBirthdaysWidget-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Sola Birthdays";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.christophschneider.birthdays.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID_PREFIX).birthdays.widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -393,7 +397,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B10000000000000000000901 /* Build configuration list for PBXProject "Birthdays" */ = {
+		B10000000000000000000901 /* Build configuration list for PBXProject "SolaBirthdays" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B10000000000000000000B01 /* Debug */,
@@ -402,7 +406,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B10000000000000000000902 /* Build configuration list for PBXNativeTarget "Birthdays" */ = {
+		B10000000000000000000902 /* Build configuration list for PBXNativeTarget "SolaBirthdays" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B10000000000000000000B11 /* Debug */,
@@ -411,7 +415,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B10000000000000000000903 /* Build configuration list for PBXNativeTarget "BirthdaysWidgetExtension" */ = {
+		B10000000000000000000903 /* Build configuration list for PBXNativeTarget "SolaBirthdaysWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B10000000000000000000B21 /* Debug */,

@@ -41,13 +41,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Liest die Geburtstage deiner Kontakte. Sie bleiben auf diesem Gerät."
+            "value" : "Liest die Geburtstage deiner Kontakte. Sie verlassen dieses Gerät nur, wenn du den iCloud-Sync einschaltest."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reads the birthdays of your contacts. They stay on this device."
+            "value" : "Reads the birthdays of your contacts. They only leave this device if you turn on iCloud sync."
           }
         }
       }

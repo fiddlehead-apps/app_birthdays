@@ -62,7 +62,15 @@ private struct SettingsForm: View {
             }
 
             Section {
-                Text("Your contacts stay on this device. Nothing is uploaded, there is no account and nothing is tracked.")
+                CloudSyncToggle(sync: store.cloud)
+            } header: {
+                Text("iCloud")
+            } footer: {
+                Text("Off unless you turn it on. Then your birthdays, their photos and the reminder settings sync through your private iCloud database to your devices with the same Apple Account. Each device sends its own reminders.")
+            }
+
+            Section {
+                Text("Your contacts stay on your devices. Nothing goes to a server of ours, there is no account and nothing is tracked.")
                     .foregroundStyle(Color.muted)
                 LabeledContent("Version", value: SettingsView.version)
             } header: {

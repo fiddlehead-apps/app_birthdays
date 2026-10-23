@@ -9,7 +9,7 @@ import os
 from PIL import Image, ImageDraw
 
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                   'Birthdays', 'Assets.xcassets', 'AppIcon.appiconset', 'icon-1024.png')
+                   'SolaBirthdays', 'Assets.xcassets', 'AppIcon.appiconset', 'icon-1024.png')
 SS = 4
 
 BRAND = '#D63A5E'

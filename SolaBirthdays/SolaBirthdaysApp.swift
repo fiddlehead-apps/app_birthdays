@@ -4,7 +4,7 @@ import UserNotifications
 import WidgetKit
 
 @main
-struct BirthdaysApp: App {
+struct SolaBirthdaysApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var delegate
     @State private var store = Store()
     @Environment(\.scenePhase) private var phase
@@ -22,6 +22,7 @@ struct BirthdaysApp: App {
             case .active:
                 store.reload()
                 Task { await store.refreshReminders() }
+                Task { await store.cloud.syncNow() }
             case .background:
                 Refresh.schedule()
             default: break
@@ -64,7 +65,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
 
 /// Daily background refresh that tops up the reminder queue.
 nonisolated enum Refresh {
-    static let id = "org.christophschneider.birthdays.refresh"
+    static let id = (Bundle.main.bundleIdentifier ?? "") + ".refresh"
 
     static func schedule() {
         let request = BGAppRefreshTaskRequest(identifier: id)
