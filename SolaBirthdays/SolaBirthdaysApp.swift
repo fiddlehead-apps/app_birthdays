@@ -13,6 +13,9 @@ struct SolaBirthdaysApp: App {
         WindowGroup {
             ListView(store: store, router: delegate.router)
                 .tint(Color.brand)
+                #if DEBUG
+                .onAppear { DemoData.seedIfRequested(store) }
+                #endif
                 .onOpenURL { url in
                     if let id = DeepLink.id(from: url) { delegate.router.open = id }
                 }
