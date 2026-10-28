@@ -102,8 +102,7 @@ struct ListView: View {
 
     private var emptyState: some View {
         VStack(alignment: .leading, spacing: 0) {
-            CakeIllustration()
-                .padding(.leading, -10)
+            BalloonIllustration()
                 .padding(.bottom, 24)
             Text("Never miss a birthday.")
                 .font(.system(size: 30, weight: .heavy))
