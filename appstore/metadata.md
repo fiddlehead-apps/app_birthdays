@@ -150,7 +150,6 @@ Entstanden im Simulator mit Demodaten: Debug-Build mit dem Startargument `-demoD
 
 ## Vor dem Einreichen
 
-- In der Datenschutzerklärung auf fiddlehead.eu steht noch `TODO: ladungsfähige Anschrift` bei „Verantwortlich“ – Adresse ergänzen (DSGVO).
 - In App Store Connect unter Business den **EU-Händlerstatus (DSA)** angeben, sonst erscheint die App in der EU nicht.
 - Archiv bauen: Xcode → Product → Archive (Release, Schema der App) → Distribute App → App Store Connect.
 - **CloudKit-Schema auf Production deployen** (CloudKit Console → Container der Geburtstage-App → Deploy Schema Changes).

@@ -60,7 +60,7 @@ struct TodayLineWidget: Widget {
             InlineView(entry: entry)
         }
         .configurationDisplayName("Date and birthdays")
-        .description("Today’s date above the clock, who has a birthday today and how many are coming up in the next 7 days.")
+        .description("Next to the date above the clock: who has a birthday today and who’s coming up in the next 7 days.")
         .supportedFamilies([.accessoryInline])
     }
 }

@@ -42,9 +42,31 @@ nonisolated enum Reminders {
         let offset: Int
         let fire: Date
 
-        /// Changes whenever anything shown in the notification changes.
+        /// Changes whenever anything shown in the notification changes (name, age, language,
+        /// photo) or the device calendar its trigger is written in.
         var id: String {
-            "\(Reminders.prefix)\(birthday.id.uuidString).\(Int(fire.timeIntervalSince1970)).\(stableHash(birthday.name))"
+            let t = texts
+            let shown = [t.title, t.subtitle, t.body, "\(birthday.hasPhoto)", "\(Calendar.current.identifier)"]
+            return "\(Reminders.prefix)\(birthday.id.uuidString).\(Int(fire.timeIntervalSince1970)).\(stableHash(shown.joined(separator: "|")))"
+        }
+
+        var texts: (title: String, subtitle: String, body: String) {
+            let age = birthday.age(on: birthdayDate)
+            if offset == 0 {
+                let body = if let age {
+                    String(localized: "Turns \(age) today.", comment: "Notification on the birthday, age known")
+                } else {
+                    String(localized: "Don’t forget to congratulate.", comment: "Notification on the birthday, age unknown")
+                }
+                return (birthday.name, String(localized: "Birthday today 🎂", comment: "Notification subtitle on the birthday"), body)
+            }
+            let date = Texts.weekdayDayMonth(birthdayDate)
+            let body = if let age {
+                String(localized: "Birthday on \(date) – turns \(age).", comment: "Notification before the birthday, age known")
+            } else {
+                String(localized: "Birthday on \(date).", comment: "Notification before the birthday, age unknown")
+            }
+            return (birthday.name, Texts.days(offset), body)
         }
     }
 
@@ -72,33 +94,19 @@ nonisolated enum Reminders {
     private static func content(_ p: Planned) -> UNNotificationContent {
         let b = p.birthday
         let c = UNMutableNotificationContent()
-        c.title = b.name
+        (c.title, c.subtitle, c.body) = p.texts
         c.threadIdentifier = "birthdays"
         c.sound = .default
         c.userInfo = ["birthday": b.id.uuidString]
-        let age = b.age(on: p.birthdayDate)
-        if p.offset == 0 {
-            c.subtitle = String(localized: "Birthday today 🎂", comment: "Notification subtitle on the birthday")
-            c.body = if let age {
-                String(localized: "Turns \(age) today.", comment: "Notification on the birthday, age known")
-            } else {
-                String(localized: "Don’t forget to congratulate.", comment: "Notification on the birthday, age unknown")
-            }
-        } else {
-            c.subtitle = Texts.days(p.offset)
-            let date = Texts.weekdayDayMonth(p.birthdayDate)
-            c.body = if let age {
-                String(localized: "Birthday on \(date) – turns \(age).", comment: "Notification before the birthday, age known")
-            } else {
-                String(localized: "Birthday on \(date).", comment: "Notification before the birthday, age unknown")
-            }
-        }
         if b.hasPhoto, let a = photoAttachment(b.id) { c.attachments = [a] }
         return c
     }
 
+    /// Written in the device's calendar, which is how iOS reads trigger components without one.
+    /// (Gregorian numbers would land centuries off with a Japanese or Buddhist calendar.) No time
+    /// zone, so the reminder follows the device when it travels.
     private static func trigger(_ fire: Date) -> UNCalendarNotificationTrigger {
-        let comps = Calendar.birthdays.dateComponents([.year, .month, .day, .hour, .minute], from: fire)
+        let comps = Calendar.current.dateComponents([.era, .year, .month, .day, .hour, .minute], from: fire)
         return UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
     }
 

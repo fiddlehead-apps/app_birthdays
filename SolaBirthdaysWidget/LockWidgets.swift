@@ -1,41 +1,47 @@
 import SwiftUI
 import WidgetKit
 
-/// Above the clock: today's date, who has a birthday today, how many in the next 7 days.
-/// The system picks the longest variant that fits.
+/// Above the clock, after the date the system shows there itself: who has a birthday today
+/// and who's coming up in the next 7 days. The system picks the longest variant that fits.
 struct InlineView: View {
     let entry: BirthdayEntry
 
     var body: some View {
         let today = entry.today
         let soon = entry.soon
-        let long = Text(verbatim: entry.date.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated)))
-        let short = Text(verbatim: entry.date.formatted(.dateTime.weekday(.abbreviated).day()))
         // "Anna", or "Anna +1" when several have their birthday today; shortest: just the count.
-        let name = today.first.map { today.count == 1 ? $0.birthday.shortName : "\($0.birthday.shortName) +\(today.count - 1)" }
-        let count = today.isEmpty ? nil : "\(today.count)"
+        let todayName = today.first.map { today.count == 1 ? $0.birthday.shortName : "\($0.birthday.shortName) +\(today.count - 1)" }
+        let todayCount = today.isEmpty ? nil : "\(today.count)"
+        // The next one and how many days until it, then how many more follow within 7 days:
+        // "Ben in 3; +2", shorter "Ben +2"; shortest: just the count.
+        let soonCount = soon.isEmpty ? nil : "\(soon.count)"
+        let others = soon.count > 1 ? " +\(soon.count - 1)" : ""
+        let soonShort = soon.first.map { "\($0.birthday.shortName)\(others)" }
+        let soonLong = soon.first.map {
+            let next = String(localized: "\($0.birthday.shortName) in \($0.days)", comment: "Lock Screen: name and days until their birthday")
+            return soon.count > 1 ? "\(next);\(others)" : next
+        }
 
         ViewThatFits {
-            line(long, today: name, soon: soon, soonLong: true)
-            line(long, today: name, soon: soon, soonLong: false)
-            line(short, today: name, soon: soon, soonLong: false)
-            line(short, today: count, soon: soon, soonLong: false)
-            short
+            line(today: todayName, soon: soonLong)
+            line(today: todayName, soon: soonShort)
+            line(today: todayCount, soon: soonShort)
+            line(today: todayCount, soon: soonCount)
+            line(today: todayCount, soon: nil)
         }
-        .widgetURL(today.first.map { DeepLink.url($0.id) })
+        .widgetURL((today.first ?? soon.first).map { DeepLink.url($0.id) })
     }
 
-    private func line(_ date: Text, today: String?, soon: Int, soonLong: Bool) -> Text {
-        var parts = [date]
+    private func line(today: String?, soon: String?) -> Text {
+        var parts: [Text] = []
         if let today {
-            parts += [Text(verbatim: " · "), Text(Image(systemName: "party.popper")), Text(verbatim: " \(today)")]
+            parts += [Text(Image(systemName: "party.popper")), Text(verbatim: " \(today)")]
         }
-        if soon > 0 {
-            parts += [Text(verbatim: " · "), Text(Image(systemName: "birthday.cake")), Text(verbatim: " ")]
-            parts.append(soonLong ? Text(verbatim: String(localized: "\(soon) in 7 days", comment: "Lock Screen: birthdays in the next 7 days"))
-                                  : Text(verbatim: "\(soon)"))
+        if let soon {
+            if !parts.isEmpty { parts.append(Text(verbatim: " · ")) }
+            parts += [Text(Image(systemName: "birthday.cake")), Text(verbatim: " \(soon)")]
         }
-        return parts.dropFirst().reduce(parts[0]) { Text("\($0)\($1)") }
+        return parts.reduce(Text(verbatim: "")) { Text("\($0)\($1)") }
     }
 }
 

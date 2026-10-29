@@ -20,7 +20,8 @@ struct SolaBirthdaysApp: App {
                     if let id = DeepLink.id(from: url) { delegate.router.open = id }
                 }
         }
-        .onChange(of: phase) { _, phase in
+        // initial: the app starts out active, so a cold start doesn't count as a change.
+        .onChange(of: phase, initial: true) { _, phase in
             switch phase {
             case .active:
                 store.reload()

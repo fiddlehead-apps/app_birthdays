@@ -183,12 +183,20 @@ final class Store {
     private func saveLocally() {
         try? Storage.save(data)
         WidgetCenter.shared.reloadAllTimelines()
+        reschedule()
+    }
+
+    /// Queues a reschedule of the current data. One at a time, so remove/add don't interleave.
+    @discardableResult
+    private func reschedule() -> Task<Void, Never> {
         let snapshot = data
         let previous = rescheduling
-        rescheduling = Task {
-            await previous?.value  // one at a time, so remove/add don't interleave
+        let task = Task {
+            await previous?.value
             await Reminders.reschedule(snapshot)
         }
+        rescheduling = task
+        return task
     }
 
     @ObservationIgnored private var rescheduling: Task<Void, Never>?
@@ -197,7 +205,7 @@ final class Store {
     /// called whenever the app becomes active.
     func refreshReminders() async {
         notifications = await UNUserNotificationCenter.current().notificationSettings().authorizationStatus
-        await Reminders.reschedule(data)
+        await reschedule().value
     }
 
     /// Asks for permission if it wasn't asked yet, then schedules.

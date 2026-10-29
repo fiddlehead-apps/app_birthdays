@@ -25,7 +25,12 @@ nonisolated enum Storage {
 
     static func load() -> AppData {
         guard let raw = try? Data(contentsOf: dataURL) else { return AppData() }
-        return (try? decoder.decode(AppData.self, from: raw)) ?? AppData()
+        if let data = try? decoder.decode(AppData.self, from: raw) { return data }
+        // The next save would overwrite it with an empty list, so keep a copy to recover from,
+        // named by its content so loading it again (widgets, every launch) doesn't pile up copies.
+        let hash = raw.reduce(UInt32(5381)) { ($0 &<< 5) &+ $0 &+ UInt32($1) }
+        try? FileManager.default.copyItem(at: dataURL, to: folder.appending(path: "birthdays-unreadable-\(hash).json"))
+        return AppData()
     }
 
     static func save(_ data: AppData) throws {

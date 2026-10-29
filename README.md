@@ -40,7 +40,7 @@ Mitteilung.
 | --- | --- | --- |
 | Nächste Geburtstage | klein | nächster Geburtstag mit Foto, große Zahl „Tage“, Name, Datum, Alter. Mehrere am selben Tag: Fotos überlappend, „Anna und Ida“. Heute: ganze Fläche himbeerrot mit Konfetti |
 | Nächste Geburtstage | mittel | links wie klein, rechts die drei danach mit Foto und Tagen (jede Zeile öffnet ihren Geburtstag) |
-| Datum und Geburtstage | Sperrbildschirm, über der Uhr | „Di. 13. Okt. · 🎉 Anna +1 · 🎂 2 in 7 Tagen“ – kürzt sich je nach Platz bis auf „Di. 13.“ |
+| Datum und Geburtstage | Sperrbildschirm, über der Uhr | hinter dem Datum, das iOS dort selbst zeigt: „🎉 Anna +1 · 🎂 Ben in 3; +2“ – wer heute dran ist, wer als Nächstes in den nächsten 7 Tagen (Name und Tage) und wie viele danach noch kommen; kürzt sich je nach Platz bis auf die Anzahlen |
 | Nächste Geburtstage | Sperrbildschirm, rechteckig | die nächsten drei mit Tagen, heute fett |
 | Nächste Geburtstage | Sperrbildschirm, rund | Tage bis zum nächsten, Vorname |
 

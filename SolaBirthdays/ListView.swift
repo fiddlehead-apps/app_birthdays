@@ -66,8 +66,10 @@ struct ListView: View {
             case .hidden: NavigationStack { HiddenView(store: store, standalone: true) }
             }
         }
-        .onChange(of: router.open) { _, id in
-            if let id, store.birthday(id) != nil { sheet = .detail(id) }
+        // initial: a notification tapped on a cold start can set it before the list is on screen.
+        .onChange(of: router.open, initial: true) { _, id in
+            guard let id else { return }
+            if store.birthday(id) != nil { sheet = .detail(id) }
             router.open = nil
         }
     }

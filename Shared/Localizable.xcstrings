@@ -4,6 +4,17 @@
     "%@%@" : {
       "shouldTranslate" : false
     },
+    "%@ in %lld" : {
+      "comment" : "Lock Screen: name and days until their birthday",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ in %2$lld"
+          }
+        }
+      }
+    },
     "%lld birthdays updated" : {
       "localizations" : {
         "en" : {
@@ -132,17 +143,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld versteckt"
-          }
-        }
-      }
-    },
-    "%lld in 7 days" : {
-      "comment" : "Lock Screen: birthdays in the next 7 days",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld in 7 Tagen"
           }
         }
       }
@@ -1209,12 +1209,12 @@
         }
       }
     },
-    "Today’s date above the clock, who has a birthday today and how many are coming up in the next 7 days." : {
+    "Next to the date above the clock: who has a birthday today and who’s coming up in the next 7 days." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Das heutige Datum über der Uhr, wer heute Geburtstag hat und wie viele in den nächsten 7 Tagen anstehen."
+            "value" : "Neben dem Datum über der Uhr: wer heute Geburtstag hat und wer in den nächsten 7 Tagen dran ist."
           }
         }
       }

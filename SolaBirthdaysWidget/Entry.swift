@@ -8,7 +8,7 @@ struct BirthdayEntry: TimelineEntry {
 
     var today: [Upcoming] { items.filter { $0.days == 0 } }
     /// Birthdays in the next 7 days, not counting today.
-    var soon: Int { items.filter { (1...7).contains($0.days) }.count }
+    var soon: [Upcoming] { items.filter { (1...7).contains($0.days) } }
 
     init(date: Date, data: AppData) {
         self.date = date
