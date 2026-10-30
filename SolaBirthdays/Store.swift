@@ -98,6 +98,7 @@ final class Store {
             let before = b
             let photoBefore = try? Data(contentsOf: Storage.photoURL(b.id))
             b.contactID = c.contactID
+            b.fromContacts = true
             b.name = c.name
             b.shortName = c.shortName
             b.month = c.month
@@ -118,8 +119,9 @@ final class Store {
             guard let cid = data.birthdays[i].contactID, let c = byID[cid] else { continue }
             update(i, from: c)
         }
-        // Birthdays from iCloud (or whose contact was re-created): match by name and date.
-        for i in data.birthdays.indices where data.birthdays[i].fromContacts && !matched.contains(data.birthdays[i].id) {
+        // Birthdays from iCloud (or whose contact was re-created, or added by hand): match by
+        // name and date, so importing never duplicates a birthday that is already in the list.
+        for i in data.birthdays.indices where !matched.contains(data.birthdays[i].id) {
             let b = data.birthdays[i]
             if let c = contacts.first(where: { !known.contains($0.contactID) && b.matches(name: $0.name, month: $0.month, day: $0.day) }) {
                 update(i, from: c)
@@ -148,7 +150,9 @@ final class Store {
     /// so the next sync doesn't offer them again.
     func add(_ contacts: [ContactBirthday], chosen: Set<String>) {
         var added: [UUID] = []
-        for c in contacts where !data.birthdays.contains(where: { $0.contactID == c.contactID }) {
+        for c in contacts where !data.birthdays.contains(where: {
+            $0.contactID == c.contactID || $0.matches(name: c.name, month: c.month, day: c.day)
+        }) {
             var b = Birthday(contactID: c.contactID, name: c.name, shortName: c.shortName,
                              month: c.month, day: c.day, year: c.year)
             b.hidden = !chosen.contains(c.contactID)
