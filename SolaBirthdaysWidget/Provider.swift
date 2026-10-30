@@ -38,8 +38,10 @@ struct Provider: TimelineProvider {
 struct BirthdayWidgets: WidgetBundle {
     var body: some Widget {
         NextBirthdaysWidget()
+        #if os(iOS)
         TodayLineWidget()
         LockScreenWidget()
+        #endif
     }
 }
 
@@ -50,10 +52,11 @@ struct NextBirthdaysWidget: Widget {
         }
         .configurationDisplayName("Next birthdays")
         .description("The next birthdays with photo and how many days to go.")
-        .supportedFamilies([.systemSmall, .systemMedium])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }
 
+#if os(iOS)
 struct TodayLineWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: "TodayLine", provider: Provider()) { entry in
@@ -75,3 +78,4 @@ struct LockScreenWidget: Widget {
         .supportedFamilies([.accessoryRectangular, .accessoryCircular])
     }
 }
+#endif

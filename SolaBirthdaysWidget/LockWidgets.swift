@@ -1,6 +1,7 @@
 import SwiftUI
 import WidgetKit
 
+#if os(iOS)
 /// Above the clock, after the date the system shows there itself: who has a birthday today
 /// and who's coming up in the next 7 days. The system picks the longest variant that fits.
 struct InlineView: View {
@@ -121,3 +122,4 @@ struct CircularView: View {
         }
     }
 }
+#endif

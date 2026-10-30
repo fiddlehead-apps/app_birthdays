@@ -24,11 +24,12 @@ struct EditView: View {
                     Text("With the year, the app shows how old they turn.")
                 }
             }
+            .formStyle(.grouped)
             .tint(Color.brand)
             .scrollContentBackground(.hidden)
             .background(Color.bg)
             .navigationTitle(birthday == nil ? Text("New birthday") : Text("Edit birthday"))
-            .navigationBarTitleDisplayMode(.inline)
+            .inlineTitle()
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { dismiss() }

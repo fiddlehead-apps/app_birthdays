@@ -19,7 +19,11 @@ nonisolated enum Reminders {
 
     static func isAllowed() async -> Bool {
         let s = await UNUserNotificationCenter.current().notificationSettings().authorizationStatus
+        #if os(macOS)
+        return s == .authorized || s == .provisional
+        #else
         return s == .authorized || s == .provisional || s == .ephemeral
+        #endif
     }
 
     static func reschedule(_ data: AppData, now: Date = .now) async {

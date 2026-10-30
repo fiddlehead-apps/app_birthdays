@@ -1,7 +1,11 @@
 import CloudKit
 import Foundation
 import Observation
+#if os(macOS)
+import AppKit
+#else
 import UIKit
+#endif
 
 /// The app's side of iCloud sync: turns local items into records and back.
 protocol CloudSyncStore: AnyObject {
@@ -179,7 +183,11 @@ final class CloudSync {
         let db = CKContainer(identifier: Self.containerID).privateCloudDatabase
         engine = CKSyncEngine(.init(database: db, stateSerialization: saved.engine, delegate: self))
         // Silent pushes tell the engine about changes from other devices. No permission prompt.
+        #if os(macOS)
+        NSApplication.shared.registerForRemoteNotifications()
+        #else
         UIApplication.shared.registerForRemoteNotifications()
+        #endif
     }
 
     private func stop() async {

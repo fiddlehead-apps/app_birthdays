@@ -1,6 +1,10 @@
 import Foundation
 import ImageIO
+#if os(macOS)
+import AppKit
+#else
 import UIKit
+#endif
 import UniformTypeIdentifiers
 
 /// The data file and contact photos in the App Group container, shared with the widgets.
@@ -55,8 +59,8 @@ nonisolated enum Storage {
         try? FileManager.default.removeItem(at: photoURL(id))
     }
 
-    static func photo(_ id: UUID) -> UIImage? {
-        UIImage(contentsOfFile: photoURL(id).path(percentEncoded: false))
+    static func photo(_ id: UUID) -> PlatformImage? {
+        PlatformImage(contentsOfFile: photoURL(id).path(percentEncoded: false))
     }
 
     private static func thumbnail(_ data: Data, maxPixels: Int) -> Data? {

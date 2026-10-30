@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 
 struct SettingsView: View {
     let store: Store
@@ -38,7 +39,7 @@ private struct SettingsForm: View {
             } footer: {
                 if store.notifications == .denied {
                     Button("Notifications are off for this app. Turn them on in Settings.") {
-                        if let url = URL(string: UIApplication.openNotificationSettingsURLString) { openURL(url) }
+                        if let url = SystemSettings.notifications { openURL(url) }
                     }
                     .foregroundStyle(Color.danger)
                 } else {
@@ -77,11 +78,12 @@ private struct SettingsForm: View {
                 Text("About")
             }
         }
+        .formStyle(.grouped)
         .tint(Color.brand)
         .scrollContentBackground(.hidden)
         .background(Color.bg)
         .navigationTitle("Settings")
-        .navigationBarTitleDisplayMode(.inline)
+        .inlineTitle()
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Done") { dismiss() }

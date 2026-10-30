@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 
 /// Main screen: today's birthdays, then everything else by next date.
 struct ListView: View {
@@ -7,8 +8,9 @@ struct ListView: View {
 
     @State private var sheet: Sheet?
     @State private var undo: Birthday?
+    @Environment(\.openURL) private var openURL
 
-    enum Sheet: Identifiable {
+    enum Sheet: Identifiable, Equatable {
         case detail(UUID), sync, settings, add, hidden
         var id: String {
             switch self {
@@ -28,7 +30,7 @@ struct ListView: View {
             if items.isEmpty {
                 emptyState
             } else {
-                if store.notifications == .denied || store.notifications == .notDetermined { remindersOffBanner }
+                if showsRemindersOff { remindersOffBanner }
                 let today = items.filter { $0.days == 0 }
                 ForEach(today) { u in
                     TodayCard(item: u) { sheet = .detail(u.id) }
@@ -55,16 +57,28 @@ struct ListView: View {
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(Color.bg)
+        #if os(macOS)
+        .toolbar { macToolbar }
+        .toolbar(removing: .title)
+        .toolbarBackground(Color.bg, for: .windowToolbar)
+        .frame(minWidth: 380, minHeight: 480)
+        #else
         .safeAreaInset(edge: .top, spacing: 0) { topBar }
+        #endif
         .overlay(alignment: .bottom) { if let undo { undoToast(undo) } }
         .sheet(item: $sheet) { s in
             switch s {
-            case .detail(let id): DetailView(store: store, id: id)
-            case .sync: SyncView(store: store)
-            case .settings: SettingsView(store: store)
-            case .add: EditView(store: store, birthday: nil)
-            case .hidden: NavigationStack { HiddenView(store: store, standalone: true) }
+            case .detail(let id): DetailView(store: store, id: id).sheetSize(width: 460, height: 680)
+            case .sync: SyncView(store: store).sheetSize(width: 480, height: 640)
+            case .settings: SettingsView(store: store).sheetSize(width: 500, height: 640)
+            case .add: EditView(store: store, birthday: nil).sheetSize(width: 420, height: 300)
+            case .hidden: NavigationStack { HiddenView(store: store, standalone: true) }.sheetSize(width: 460, height: 560)
             }
+        }
+        .onChange(of: router.sheet) { _, s in
+            guard let s else { return }
+            sheet = s
+            router.sheet = nil
         }
         // initial: a notification tapped on a cold start can set it before the list is on screen.
         .onChange(of: router.open, initial: true) { _, id in
@@ -86,6 +100,25 @@ struct ListView: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 6)
         .background(Color.bg)
+    }
+
+    #if os(macOS)
+    @ToolbarContentBuilder private var macToolbar: some ToolbarContent {
+        ToolbarItemGroup(placement: .primaryAction) {
+            Button("Add birthday", systemImage: "plus") { sheet = .add }
+            Button("Sync with contacts", systemImage: "arrow.triangle.2.circlepath") { sheet = .sync }
+            Button("Settings", systemImage: "gearshape") { sheet = .settings }
+        }
+    }
+    #endif
+
+    /// On the Mac only until the question was answered: the iPhone reminds too, so saying no is fine there.
+    private var showsRemindersOff: Bool {
+        #if os(macOS)
+        store.notifications == .notDetermined
+        #else
+        store.notifications == .denied || store.notifications == .notDetermined
+        #endif
     }
 
     private var header: some View {
@@ -217,8 +250,8 @@ struct ListView: View {
     private func turnOnNotifications() {
         if store.notifications == .notDetermined {
             Task { await store.requestNotifications() }
-        } else if let url = URL(string: UIApplication.openNotificationSettingsURLString) {
-            UIApplication.shared.open(url)
+        } else if let url = SystemSettings.notifications {
+            openURL(url)
         }
     }
 

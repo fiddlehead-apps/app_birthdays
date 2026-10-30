@@ -30,7 +30,7 @@ private struct DetailContent: View {
                 Button("Done") { dismiss() }
             }
             if store.birthday(id)?.isManual == true {
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItem(placement: .leading) {
                     Button("Edit") { editing = true }
                 }
             }

@@ -1,9 +1,10 @@
 #!/bin/bash
-# Builds Sola Birthdays and installs it on your iPhone.
+# Builds Sola Birthdays and installs it on your iPhone or Mac.
 #
 #   ./build.sh                  build for the iPhone and install it
-#   ./build.sh --no-install     build for the iPhone, don't install
-#   ./build.sh --install-only   don't build, install the last build
+#   ./build.sh --no-install     build, don't install
+#   ./build.sh --install-only   don't build, install the last iPhone build
+#   ./build.sh --mac            build for the Mac and copy it to /Applications (with the widget)
 #   ./build.sh --sim            build for the simulator without signing (quick compile check)
 #   ./build.sh --icloud         build with iCloud sync (needs a paid developer team)
 #
@@ -28,6 +29,7 @@ cd "$HERE" || exit 1
 PROJECT="$SCHEME.xcodeproj"
 OUT="${BUILD_DIR:-/tmp/sola-build}"   # keep out of ~/Documents, iCloud file attributes break code signing
 DEVICE_APP="$OUT/$APP_KEY-device/Build/Products/Release-iphoneos/$APPFILE"
+MAC_APP="$OUT/$APP_KEY-mac/Build/Products/Release/$APPFILE"
 
 MODE=device
 INSTALL=1
@@ -38,6 +40,7 @@ for arg in "$@"; do
     --no-install)   INSTALL=0 ;;
     --install-only) MODE=install ;;
     --sim)          MODE=sim ;;
+    --mac)          MODE=mac ;;
     --icloud)       SETTINGS+=("SOLA_ICLOUD=YES") ;;
     -h|--help)      sed -n '2,/^$/p' "$HERE/$(basename "$0")" | sed -e '$d' -e 's/^# \{0,1\}//'; exit 0 ;;
     *)              echo "Unknown argument: $arg (see --help)"; exit 2 ;;
@@ -122,6 +125,18 @@ install_device() {
     xcrun devicectl device install app --device "$DEVICE_ID" "$DEVICE_APP"
 }
 
+install_mac() {
+  if [ ! -d "$MAC_APP" ]; then
+    echo "$NAME: no Mac build in $OUT, build first."
+    FAILED=1
+    return 1
+  fi
+  # Quit a running copy first, so the new one (and its widget) is the one that runs.
+  osascript -e "quit app \"$NAME\"" >/dev/null 2>&1
+  step "$NAME in /Applications" "$OUT/$APP_KEY-mac-install.log" \
+    ditto "$MAC_APP" "/Applications/$APPFILE"
+}
+
 START=$(date +%s)
 case "$MODE" in
   install)
@@ -132,6 +147,14 @@ case "$MODE" in
       xcodebuild -project "$PROJECT" -scheme "$SCHEME" -configuration Debug \
         -destination 'generic/platform=iOS Simulator' -derivedDataPath "$OUT/$APP_KEY-sim" \
         CODE_SIGNING_ALLOWED=NO "${SETTINGS[@]}" build
+    ;;
+  mac)
+    if step "$NAME (Mac)" "$OUT/$APP_KEY-mac.log" \
+        xcodebuild -project "$PROJECT" -scheme "$SCHEME" -configuration Release \
+          -destination 'generic/platform=macOS' -derivedDataPath "$OUT/$APP_KEY-mac" \
+          -allowProvisioningUpdates "${SETTINGS[@]}" build; then
+      [ "$INSTALL" = 1 ] && install_mac
+    fi
     ;;
   device)
     if step "$NAME (iPhone)" "$OUT/$APP_KEY-device.log" \

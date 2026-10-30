@@ -25,5 +25,8 @@ SOLA_CLOUDKIT_CONTAINER = $(SOLA_CLOUDKIT_CONTAINER_$(SOLA_ICLOUD))
 SOLA_APP_ENTITLEMENTS_NO = Config/SolaBirthdays.entitlements
 SOLA_APP_ENTITLEMENTS_YES = Config/SolaBirthdays-iCloud.entitlements
 SOLA_APP_ENTITLEMENTS = $(SOLA_APP_ENTITLEMENTS_$(SOLA_ICLOUD))
+SOLA_APP_ENTITLEMENTS_MAC_NO = Config/SolaBirthdays-macOS.entitlements
+SOLA_APP_ENTITLEMENTS_MAC_YES = Config/SolaBirthdays-macOS-iCloud.entitlements
+SOLA_APP_ENTITLEMENTS_MAC = $(SOLA_APP_ENTITLEMENTS_MAC_$(SOLA_ICLOUD))
 
 #include? "../../sola-local.xcconfig"

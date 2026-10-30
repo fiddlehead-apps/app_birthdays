@@ -1,9 +1,10 @@
-# Sola Birthdays (iOS)
+# Sola Birthdays (iOS und macOS)
 
 Auf Deutsch heißt die App **Sola Geburtstage**.
 
 Liste mit den Geburtstagen deiner Kontakte, Erinnerungen und Widgets für Home- und
-Sperrbildschirm. SwiftUI + WidgetKit, keine Abhängigkeiten, iPhone und iPad, ab iOS 18,
+Sperrbildschirm und den Mac-Schreibtisch. SwiftUI + WidgetKit, keine Abhängigkeiten, iPhone
+und iPad ab iOS 18, Mac ab macOS 15 (native App aus denselben Targets, kein Catalyst),
 Deutsch und Englisch.
 
 * Kein Server, kein Konto – die Kontakte verlassen das Gerät nie, außer man schaltet den
@@ -40,11 +41,24 @@ Mitteilung.
 | --- | --- | --- |
 | Nächste Geburtstage | klein | nächster Geburtstag mit Foto, große Zahl „Tage“, Name, Datum, Alter. Mehrere am selben Tag: Fotos überlappend, „Anna und Ida“. Heute: ganze Fläche himbeerrot mit Konfetti |
 | Nächste Geburtstage | mittel | links wie klein, rechts die drei danach mit Foto und Tagen (jede Zeile öffnet ihren Geburtstag) |
+| Nächste Geburtstage | groß | oben der nächste als Zeile, darunter die fünf danach |
 | Datum und Geburtstage | Sperrbildschirm, über der Uhr | hinter dem Datum, das iOS dort selbst zeigt: „🎉 Anna +1 · 🎂 Ben in 3; +2“ – wer heute dran ist, wer als Nächstes in den nächsten 7 Tagen (Name und Tage) und wie viele danach noch kommen; kürzt sich je nach Platz bis auf die Anzahlen |
 | Nächste Geburtstage | Sperrbildschirm, rechteckig | die nächsten drei mit Tagen, heute fett |
 | Nächste Geburtstage | Sperrbildschirm, rund | Tage bis zum nächsten, Vorname |
 
 Antippen öffnet die App beim jeweiligen Geburtstag (`solabirthdays://birthday/<id>`).
+Auf dem Mac gibt es die Home-Widgets (klein, mittel, groß) für Schreibtisch und
+Mitteilungszentrale; Sperrbildschirm-Widgets gibt es dort nicht.
+
+### Mac
+
+Dieselbe App, nativ für macOS: ein Fenster, Knöpfe in der Symbolleiste, im Menü
+„Geburtstag hinzufügen“ (⌘N), „Mit Kontakten abgleichen“ (⌘R) und „Einstellungen …“ (⌘,).
+Verstecken per Rechtsklick oder Wischen auf dem Trackpad. Kontakte und Erinnerungen wie auf
+dem iPhone, mit zwei Unterschieden: Es gibt keinen eingeschränkten Kontaktzugriff, und der
+Hinweis „Erinnerungen sind aus“ erscheint nur, bis die Frage nach Mitteilungen beantwortet
+ist – wer am Mac Nein sagt, weil das iPhone schon erinnert, wird nicht weiter gefragt.
+Fenster schließen beendet die App nicht, damit der iCloud-Sync weiterläuft.
 
 ### Grenze von iOS: 64 Mitteilungen
 
@@ -132,10 +146,26 @@ SOLA_ICLOUD = YES
 oder einmalig `../build-sola-apps.sh --icloud`. Vor TestFlight/App Store im CloudKit
 Dashboard das Schema nach Production deployen.
 
-App-Icon neu erzeugen (braucht Pillow):
+### Auf den eigenen Mac
+
+```bash
+./build.sh --mac
+```
+
+baut die Mac-App (Release, signiert) und kopiert sie nach `/Applications`; danach lässt sich
+das Widget auf dem Schreibtisch hinzufügen (Rechtsklick → Widgets bearbeiten). Der Mac
+braucht dieselbe App Group und denselben iCloud-Container wie das iPhone, Xcode registriert
+ihn beim ersten Bauen mit `-allowProvisioningUpdates` als Gerät.
+
+App-Icon neu erzeugen (braucht Pillow), danach die Mac-Größen daraus (abgerundet nach Apples
+Mac-Vorlage):
 
 ```bash
 python3 tools/make_icon.py
+```
+
+```bash
+swift tools/make_mac_icon.swift
 ```
 
 ## Aufbau
@@ -146,6 +176,7 @@ python3 tools/make_icon.py
 | `Shared/Storage.swift` | JSON und Fotos im App-Group-Container, Deep Links |
 | `Shared/Reminders.swift` | Mitteilungen planen (die nächsten 60), Texte, Foto-Anhang |
 | `Shared/Texts.swift` / `Theme.swift` | gemeinsame Texte, Farben, `Avatar` |
+| `Shared/Platform.swift` | was zwischen iPhone/iPad und Mac abweicht: Bilder, Farben, Systemeinstellungs-Links, Sheet-Größen |
 | `SolaBirthdays/Store.swift` | App-Zustand, Abgleich-Logik, Speichern → Widgets + Erinnerungen + iCloud, Records |
 | `SolaBirthdays/CloudSync.swift` / `CloudSyncToggle.swift` | iCloud-Sync (CKSyncEngine), Schalter mit Status; gleiche Dateien wie in Sola Slideshow |
 | `SolaBirthdays/ContactsReader.swift` | Kontakte mit Geburtstag lesen |
@@ -153,5 +184,5 @@ python3 tools/make_icon.py
 | `SolaBirthdays/SyncView.swift` | Abgleich und Auswahl neuer Geburtstage |
 | `SolaBirthdays/DetailView.swift` / `EditView.swift` | Detail mit eigenen Erinnerungen, Eintrag von Hand |
 | `SolaBirthdays/SettingsView.swift` | Einstellungen, versteckte Geburtstage |
-| `Config/` | `Config.xcconfig` (Bundle-IDs, Team, iCloud-Schalter), Info.plists, Entitlements (mit und ohne iCloud) |
+| `Config/` | `Config.xcconfig` (Bundle-IDs, Team, iCloud-Schalter), Info.plists, Entitlements (mit und ohne iCloud, für den Mac mit Sandbox) |
 | `SolaBirthdaysWidget/` | Timeline (ein Eintrag je Mitternacht), Home- und Sperrbildschirm-Widgets |

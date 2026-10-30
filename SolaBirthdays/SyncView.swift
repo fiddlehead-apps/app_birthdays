@@ -28,7 +28,7 @@ struct SyncView: View {
                             title: "No access to contacts",
                             text: Text("Allow access in Settings to import birthdays from your contacts.")) {
                         Button("Open Settings") {
-                            if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
+                            if let url = SystemSettings.contacts { openURL(url) }
                         }
                         .buttonStyle(BigButtonStyle(primary: true))
                     }
@@ -42,7 +42,7 @@ struct SyncView: View {
             }
             .background(Color.bg)
             .navigationTitle("Sync with contacts")
-            .navigationBarTitleDisplayMode(.inline)
+            .inlineTitle()
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { dismiss() }
@@ -132,7 +132,7 @@ struct SyncView: View {
             if on { chosen.remove(c.contactID) } else { chosen.insert(c.contactID) }
         } label: {
             HStack(spacing: 14) {
-                Avatar(birthday: c.preview, size: 42, image: c.photo.flatMap(UIImage.init(data:)))
+                Avatar(birthday: c.preview, size: 42, image: c.photo.flatMap(PlatformImage.init(data:)))
                 VStack(alignment: .leading, spacing: 2) {
                     Text(c.name)
                         .font(.system(size: 16, weight: .semibold))

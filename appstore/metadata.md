@@ -8,7 +8,7 @@ Texte zum Einfügen in App Store Connect. Zeichenlimits sind geprüft (Name/Unte
 | --- | --- |
 | Bundle-ID | `eu.fiddlehead.sola.birthdays` |
 | SKU | `eu.fiddlehead.sola.birthdays` |
-| Plattformen | iPhone, iPad |
+| Plattformen | iPhone, iPad, Mac (gleiche Bundle-ID, ein Kauf für alle) |
 | Primärsprache | Deutsch (weitere: Englisch) |
 | Kategorie | Lifestyle |
 | Zweite Kategorie | Produktivität (Productivity) |
@@ -60,7 +60,7 @@ RECHTZEITIG ERINNERT
 • Das Kontaktfoto kommt mit in die Mitteilung.
 
 WIDGETS
-• Home-Bildschirm: wer als Nächstes dran ist, mit Foto, Tagen und Alter.
+• Home-Bildschirm und Mac-Schreibtisch: wer als Nächstes dran ist, mit Foto, Tagen und Alter.
 • Sperrbildschirm: Datum und anstehende Geburtstage über der Uhr, als Liste oder rund.
 
 AUCH OHNE KONTAKT
@@ -70,7 +70,7 @@ DEINE KONTAKTE BLEIBEN BEI DIR
 • Alles bleibt auf deinem Gerät. Synchronisierung über deine eigene iCloud nur, wenn du sie einschaltest.
 • Kein Konto, keine Werbung, kein Tracking.
 
-Für iPhone und iPad. Sola Geburtstage ist kostenlos und Open Source.
+Für iPhone, iPad und Mac. Sola Geburtstage ist kostenlos und Open Source.
 ```
 
 ## English
@@ -106,7 +106,7 @@ REMINDED IN TIME
 • The contact photo comes along in the notification.
 
 WIDGETS
-• Home Screen: who's next, with photo, days to go and age.
+• Home Screen and Mac desktop: who's next, with photo, days to go and age.
 • Lock Screen: the date and upcoming birthdays above the clock, as a list or round.
 
 NOT IN YOUR CONTACTS?
@@ -116,7 +116,7 @@ YOUR CONTACTS STAY WITH YOU
 • Everything stays on your device. Sync through your own iCloud only if you turn it on.
 • No account, no ads, no tracking.
 
-For iPhone and iPad. Sola Birthdays is free and open source.
+For iPhone, iPad and Mac. Sola Birthdays is free and open source.
 ```
 
 ## Hinweise für die Prüfung (App Review Information)
@@ -153,3 +153,4 @@ Entstanden im Simulator mit Demodaten: Debug-Build mit dem Startargument `-demoD
 - In App Store Connect unter Business den **EU-Händlerstatus (DSA)** angeben, sonst erscheint die App in der EU nicht.
 - Archiv bauen: Xcode → Product → Archive (Release, Schema der App) → Distribute App → App Store Connect.
 - **CloudKit-Schema auf Production deployen** (CloudKit Console → Container der Geburtstage-App → Deploy Schema Changes).
+- **Mac:** In App Store Connect bei der App die Plattform macOS hinzufügen (gleicher Eintrag, gleiche Bundle-ID). Eigenes Archiv mit dem Ziel „Any Mac“ hochladen, eigene Screenshots (16:10, z. B. 2880 × 1800) und dieselben Texte. Die Mac-Version durchläuft eine eigene Prüfung.

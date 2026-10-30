@@ -23,7 +23,7 @@ nonisolated extension Color {
     }
 
     private static func dynamic(_ light: UInt32, _ dark: UInt32) -> Color {
-        Color(UIColor { t in UIColor(Color(hex: t.userInterfaceStyle == .dark ? dark : light)) })
+        dynamic(light: Color(hex: light), dark: Color(hex: dark))
     }
 }
 
@@ -32,12 +32,12 @@ struct Avatar: View {
     let birthday: Birthday
     var size: CGFloat = 44
     /// Pass a preloaded image (widgets); otherwise the photo is read from disk.
-    var image: UIImage?
+    var image: PlatformImage?
 
     var body: some View {
         Group {
             if let img = image ?? (birthday.hasPhoto ? Storage.photo(birthday.id) : nil) {
-                Image(uiImage: img)
+                Image(platformImage: img)
                     .resizable()
                     .scaledToFill()
             } else {

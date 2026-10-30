@@ -3,6 +3,7 @@ import WidgetKit
 
 /// Small: the next birthday (or everyone on that day) big, with photo and days to go.
 /// Medium: the same on the left, the three after that on the right.
+/// Large: the same as one row on top, the five after that below.
 struct HomeWidgetView: View {
     let entry: BirthdayEntry
     @Environment(\.widgetFamily) private var family
@@ -12,7 +13,15 @@ struct HomeWidgetView: View {
         Group {
             if let first = entry.items.first {
                 let group = entry.items.filter { $0.days == first.days }
-                if family == .systemMedium {
+                if family == .systemLarge {
+                    VStack(alignment: .leading, spacing: 12) {
+                        WideFeature(group: group, festive: festive)
+                        Rectangle()
+                            .fill(festive ? Color.brandInk.opacity(0.25) : Color.line)
+                            .frame(height: 1)
+                        upcomingList(Array(entry.items.dropFirst(group.count).prefix(5)), festive: festive)
+                    }
+                } else if family == .systemMedium {
                     HStack(spacing: 12) {
                         Feature(group: group, festive: festive)
                             .frame(width: 116)
@@ -127,14 +136,63 @@ private struct Feature: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
     }
 
-    private var names: String {
-        group.count == 1 ? group[0].birthday.name : group.map(\.birthday.shortName).formatted(.list(type: .and))
+    private var names: String { group.names }
+    private var detail: String { group.detail }
+}
+
+/// The next birthday as one row, for the top of the large widget.
+private struct WideFeature: View {
+    let group: [Upcoming]
+    let festive: Bool
+
+    var body: some View {
+        let first = group[0]
+        HStack(spacing: 12) {
+            AvatarStack(items: Array(group.prefix(3)), ring: festive ? Color.brand : Color.surface)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(group.names)
+                    .font(.system(size: 17, weight: .bold))
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                Text(group.detail)
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundStyle(festive ? Color.brandInk.opacity(0.8) : Color.muted)
+                    .lineLimit(1)
+            }
+            Spacer(minLength: 4)
+            if first.days == 0 {
+                Image(systemName: "party.popper.fill")
+                    .font(.system(size: 30))
+                    .foregroundStyle(Color.brandInk)
+                    .widgetAccentable()
+            } else {
+                VStack(alignment: .trailing, spacing: -4) {
+                    Text(verbatim: "\(first.days)")
+                        .font(.system(size: 36, weight: .heavy, design: .rounded))
+                        .foregroundStyle(Color.brand)
+                        .lineLimit(1)
+                    Text(Texts.unit(first.days))
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(Color.muted)
+                }
+                .widgetAccentable()
+            }
+        }
+        .foregroundStyle(festive ? Color.brandInk : Color.ink)
+    }
+}
+
+private extension [Upcoming] {
+    /// The full name, or the first names of everyone on that day.
+    var names: String {
+        count == 1 ? self[0].birthday.name : map(\.birthday.shortName).formatted(.list(type: .and))
     }
 
-    private var detail: String {
-        let first = group[0]
+    /// When, and how old if it's just one.
+    var detail: String {
+        let first = self[0]
         let when = first.days == 0 ? Texts.days(0) : Texts.shortDayMonth(first.date)
-        guard group.count == 1, let age = first.age else { return when }
+        guard count == 1, let age = first.age else { return when }
         return "\(when) · \(Texts.turns(age))"
     }
 }

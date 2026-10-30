@@ -1009,6 +1009,17 @@
         }
       }
     },
+    "Settings…" : {
+      "comment" : "Mac menu item",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen …"
+          }
+        }
+      }
+    },
     "Show" : {
       "localizations" : {
         "de" : {

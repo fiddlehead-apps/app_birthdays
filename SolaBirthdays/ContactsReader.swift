@@ -23,15 +23,15 @@ nonisolated enum ContactsReader {
     enum Access { case full, limited, denied }
 
     static func requestAccess() async -> Access {
+        if CNContactStore.authorizationStatus(for: .contacts) == .notDetermined {
+            _ = try? await CNContactStore().requestAccess(for: .contacts)
+        }
         switch CNContactStore.authorizationStatus(for: .contacts) {
         case .authorized: return .full
-        case .limited: return .limited
-        case .denied, .restricted: return .denied
-        case .notDetermined:
-            _ = try? await CNContactStore().requestAccess(for: .contacts)
-            return CNContactStore.authorizationStatus(for: .contacts) == .limited ? .limited
-                : CNContactStore.authorizationStatus(for: .contacts) == .authorized ? .full : .denied
-        @unknown default: return .denied
+        #if os(iOS)
+        case .limited: return .limited  // the Mac has no limited access
+        #endif
+        default: return .denied
         }
     }
 
