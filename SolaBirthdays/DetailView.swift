@@ -112,7 +112,7 @@ private struct DetailContent: View {
             .foregroundStyle(Color.ink)
             .frame(maxWidth: 520)
             .padding(.horizontal, 22)
-            .padding(.top, 8)
+            .padding(.top, topPadding)
             .padding(.bottom, 32)
             .frame(maxWidth: .infinity)
         }
@@ -123,6 +123,15 @@ private struct DetailContent: View {
             }
             Button("Cancel", role: .cancel) {}
         }
+    }
+
+    /// On the iPhone the buttons sit above the photo; on the Mac they're at the bottom of the sheet.
+    private var topPadding: CGFloat {
+        #if os(macOS)
+        28
+        #else
+        8
+        #endif
     }
 
     private func pill(_ text: String, strong: Bool) -> some View {
@@ -167,6 +176,8 @@ private struct DetailContent: View {
             }
         }
         .tint(Color.brand)
+        // On the Mac the toggle is a checkbox that doesn't fill the row; keep the card full width.
+        .frame(maxWidth: .infinity, alignment: .leading)
         .card()
         .opacity(b.hidden ? 0.5 : 1)
         .disabled(b.hidden)

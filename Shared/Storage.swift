@@ -12,7 +12,21 @@ nonisolated enum Storage {
     /// group.<prefix>.birthdays, from the Info.plist (see Config/Config.xcconfig).
     static let appGroup = Bundle.main.object(forInfoDictionaryKey: "AppGroupID") as? String ?? ""
 
+    #if DEBUG
+    /// `-demoFolder <path>` (debug builds): the data in that folder instead of the App Group, for
+    /// screenshots with demo data on a Mac that has real data. Reminders are then left alone,
+    /// because the ones scheduled belong to the real data.
+    static let demoFolder = UserDefaults.standard.string(forKey: "demoFolder")
+        .map { URL(filePath: $0, directoryHint: .isDirectory) }
+    #endif
+
     static var folder: URL {
+        #if DEBUG
+        if let demoFolder {
+            try? FileManager.default.createDirectory(at: demoFolder, withIntermediateDirectories: true)
+            return demoFolder
+        }
+        #endif
         let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup)
             ?? URL.applicationSupportDirectory  // unsigned simulator builds have no App Group
         try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)

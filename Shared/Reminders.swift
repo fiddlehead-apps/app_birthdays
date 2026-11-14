@@ -31,6 +31,9 @@ nonisolated enum Reminders {
     /// and the widgets can run this at the same time, and being stopped halfway (widgets) never
     /// loses a reminder that was already there.
     static func reschedule(_ data: AppData, now: Date = .now) async {
+        #if DEBUG
+        if Storage.demoFolder != nil { return }
+        #endif
         guard await isAllowed() else { return }
         let center = UNUserNotificationCenter.current()
         let planned = Array(plan(data, now: now).prefix(limit))

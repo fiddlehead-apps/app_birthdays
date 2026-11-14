@@ -174,6 +174,13 @@ SOLA_ICLOUD = YES
 oder einmalig `../build-sola-apps.sh --icloud`. Vor TestFlight/App Store im CloudKit
 Dashboard das Schema nach Production deployen.
 
+Vor jedem Upload zu App Store Connect (auch TestFlight) die Buildnummer erhöhen und den
+Commit mitnehmen:
+
+```bash
+./build.sh --bump
+```
+
 ### Auf den eigenen Mac
 
 ```bash

@@ -133,24 +133,37 @@ English: No sign-in needed. The app works without contacts access: tap "Add by h
 
 ## Screenshots
 
-In `appstore/screenshots/<sprache>/`, in der Reihenfolge der Nummern hochladen. Größen: iPhone 6,9" (1320 × 2868), iPad 13" (2064 × 2752).
+In `appstore/screenshots/<sprache>/`, in der Reihenfolge der Nummern hochladen. Größen: iPhone 6,9" (1320 × 2868), iPad 13" (2064 × 2752), Mac (2880 × 1800).
 
-Entstanden im Simulator mit Demodaten: Debug-Build mit dem Startargument `-demoData YES` (siehe `DemoData.swift`; im Release-Build nicht enthalten). Alle Namen und Bilder sind erfunden.
+Entstanden mit Demodaten: Debug-Build mit dem Startargument `-demoData YES` (siehe `DemoData.swift`; im Release-Build nicht enthalten). Alle Namen und Bilder sind erfunden. iPhone und iPad im Simulator; die Mac-Bilder zeichnet die App selbst (Fenster auf hellem Hintergrund, braucht keine Bildschirmaufnahme-Erlaubnis), getrennt von den echten Daten und ohne die Erinnerungen anzufassen:
+
+```bash
+APP="<DerivedData>/Build/Products/Debug/Sola Birthdays.app"
+open -n "$APP" --args -demoFolder /tmp/sola-demo -demoData YES -demoSnapshot /tmp/mac-1.png -AppleLanguages "(de)" -AppleLocale de_DE
+open -n "$APP" --args -demoFolder /tmp/sola-demo -demoOpen 2 -demoSnapshot /tmp/mac-2.png -AppleLanguages "(de)" -AppleLocale de_DE
+```
+
+Damit das Fenster aktiv aussieht (farbige Fensterknöpfe), muss die App vorne sein: nach dem Start noch einmal `open "$APP"`.
 
 - `screenshots/de/ipad-1.png`
 - `screenshots/de/ipad-2.png`
 - `screenshots/de/iphone-1.png`
 - `screenshots/de/iphone-2.png`
 - `screenshots/de/iphone-3.png`
+- `screenshots/de/mac-1.png`
+- `screenshots/de/mac-2.png`
 - `screenshots/en/ipad-1.png`
 - `screenshots/en/ipad-2.png`
 - `screenshots/en/iphone-1.png`
 - `screenshots/en/iphone-2.png`
 - `screenshots/en/iphone-3.png`
+- `screenshots/en/mac-1.png`
+- `screenshots/en/mac-2.png`
 
 ## Vor dem Einreichen
 
 - In App Store Connect unter Business den **EU-Händlerstatus (DSA)** angeben, sonst erscheint die App in der EU nicht.
+- Buildnummer erhöhen: `./build.sh --bump` (jeder Upload, auch für TestFlight, braucht eine höhere; iPhone und Mac dürfen dieselbe haben).
 - Archiv bauen: Xcode → Product → Archive (Release, Schema der App) → Distribute App → App Store Connect.
 - **CloudKit-Schema auf Production deployen** (CloudKit Console → Container der Geburtstage-App → Deploy Schema Changes).
-- **Mac:** In App Store Connect bei der App die Plattform macOS hinzufügen (gleicher Eintrag, gleiche Bundle-ID). Eigenes Archiv mit dem Ziel „Any Mac“ hochladen, eigene Screenshots (16:10, z. B. 2880 × 1800) und dieselben Texte. Die Mac-Version durchläuft eine eigene Prüfung.
+- **Mac:** In App Store Connect bei der App die Plattform macOS hinzufügen (gleicher Eintrag, gleiche Bundle-ID). Eigenes Archiv mit dem Ziel „Any Mac“ hochladen, die Mac-Screenshots (`mac-*.png`) und dieselben Texte. Die Mac-Version durchläuft eine eigene Prüfung.

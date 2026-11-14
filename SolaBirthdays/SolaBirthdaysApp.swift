@@ -36,7 +36,13 @@ struct SolaBirthdaysApp: App {
         ListView(store: store, router: delegate.router)
             .tint(Color.brand)
             #if DEBUG
-            .onAppear { DemoData.seedIfRequested(store) }
+            .onAppear {
+                DemoData.seedIfRequested(store)
+                DemoData.openIfRequested(store, delegate.router)
+                #if os(macOS)
+                DemoData.snapshotIfRequested()
+                #endif
+            }
             #endif
             .onOpenURL { url in
                 if let id = DeepLink.id(from: url) { delegate.router.open = id }

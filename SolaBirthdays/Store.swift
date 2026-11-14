@@ -268,6 +268,9 @@ final class Store {
     /// Tops up the reminders and checks whether notifications are allowed;
     /// called whenever the app becomes active.
     func refreshReminders() async {
+        #if DEBUG
+        if Storage.demoFolder != nil { return }  // screenshots: no "Reminders are off" banner
+        #endif
         notifications = await UNUserNotificationCenter.current().notificationSettings().authorizationStatus
         guard loaded else { return }  // an empty list would cancel all reminders
         await reschedule().value

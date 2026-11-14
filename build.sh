@@ -7,6 +7,8 @@
 #   ./build.sh --mac            build for the Mac and copy it to /Applications (with the widget)
 #   ./build.sh --sim            build for the simulator without signing (quick compile check)
 #   ./build.sh --icloud         build with iCloud sync (needs a paid developer team)
+#   ./build.sh --bump           raise the build number by one, before an App Store or TestFlight
+#                               upload (alone it only does that; with other options it builds after)
 #
 # Environment:
 #   DEVICE_ID   iPhone to install on (default: the one paired physical iPhone;
@@ -33,6 +35,7 @@ MAC_APP="$OUT/$APP_KEY-mac/Build/Products/Release/$APPFILE"
 
 MODE=device
 INSTALL=1
+BUMP=0
 SETTINGS=()   # build settings passed to xcodebuild
 [ -n "$TEAM_ID" ] && SETTINGS+=("SOLA_TEAM=$TEAM_ID")
 for arg in "$@"; do
@@ -42,10 +45,26 @@ for arg in "$@"; do
     --sim)          MODE=sim ;;
     --mac)          MODE=mac ;;
     --icloud)       SETTINGS+=("SOLA_ICLOUD=YES") ;;
+    --bump)         BUMP=1 ;;
     -h|--help)      sed -n '2,/^$/p' "$HERE/$(basename "$0")" | sed -e '$d' -e 's/^# \{0,1\}//'; exit 0 ;;
     *)              echo "Unknown argument: $arg (see --help)"; exit 2 ;;
   esac
 done
+
+# Every upload to App Store Connect needs a higher build number (CURRENT_PROJECT_VERSION, shared
+# by the app and the widget). Commit the change, so the next upload starts from it.
+if [ "$BUMP" = 1 ]; then
+  PBX="$PROJECT/project.pbxproj"
+  OLD="$(sed -n 's/.*CURRENT_PROJECT_VERSION = \([0-9][0-9]*\);.*/\1/p' "$PBX" | sort -n | tail -1)"
+  if [ -z "$OLD" ]; then
+    echo "No CURRENT_PROJECT_VERSION in $PBX."
+    exit 1
+  fi
+  NEW=$((OLD + 1))
+  sed -i '' "s/CURRENT_PROJECT_VERSION = [0-9][0-9]*;/CURRENT_PROJECT_VERSION = $NEW;/" "$PBX"
+  echo "Build number $OLD → $NEW (version $(sed -n 's/.*MARKETING_VERSION = \(.*\);.*/\1/p' "$PBX" | head -1))"
+  [ $# = 1 ] && exit 0
+fi
 
 if [ "$MODE" = install ] && [ "$INSTALL" = 0 ]; then
   echo "--install-only and --no-install exclude each other."
