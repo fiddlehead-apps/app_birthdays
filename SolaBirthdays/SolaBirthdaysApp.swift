@@ -24,9 +24,10 @@ struct SolaBirthdaysApp: App {
             .commands { MenuCommands(router: delegate.router) }
         #else
         WindowGroup { content }
-            .backgroundTask(.appRefresh(Refresh.id)) {
-                await Reminders.reschedule(Storage.load())
+            .backgroundTask(.appRefresh(Refresh.id)) { [store] in
+                // Schedule the next one first, in case this one runs out of time.
                 Refresh.schedule()
+                await store.backgroundRefresh()
             }
         #endif
     }
@@ -104,7 +105,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
     }
 }
 
-/// Daily background refresh that tops up the reminder queue.
+/// Background refresh that gets changes from iCloud and tops up the reminder queue.
 nonisolated enum Refresh {
     static let id = (Bundle.main.bundleIdentifier ?? "") + ".refresh"
 

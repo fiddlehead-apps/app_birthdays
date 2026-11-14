@@ -69,8 +69,14 @@ struct RectangularView: View {
                 Label("Birthdays", systemImage: "birthday.cake")
                     .font(.system(size: 15, weight: .bold))
                     .widgetAccentable()
-                Text("No birthdays yet")
-                    .font(.system(size: 14))
+                Group {
+                    switch entry.empty {
+                    case .noBirthdays: Text("No birthdays yet")
+                    case .allHidden: Text("All birthdays are hidden")
+                    case .locked: EmptyView()
+                    }
+                }
+                .font(.system(size: 14))
             }
             ForEach(entry.items.prefix(3)) { u in
                 HStack(spacing: 4) {

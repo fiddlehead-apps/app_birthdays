@@ -5,6 +5,14 @@ struct BirthdayEntry: TimelineEntry {
     let date: Date
     /// Visible birthdays by next date, as seen from `date`.
     let items: [Upcoming]
+    /// Why `items` is empty, if it is.
+    private(set) var empty: Empty
+
+    enum Empty {
+        case noBirthdays, allHidden
+        /// The data can't be read before the first unlock after a restart.
+        case locked
+    }
 
     var today: [Upcoming] { items.filter { $0.days == 0 } }
     /// Birthdays in the next 7 days, not counting today.
@@ -13,6 +21,13 @@ struct BirthdayEntry: TimelineEntry {
     init(date: Date, data: AppData) {
         self.date = date
         items = Array(data.upcoming(from: date).prefix(12))
+        empty = data.birthdays.isEmpty ? .noBirthdays : .allHidden
+    }
+
+    static func locked(_ date: Date) -> BirthdayEntry {
+        var entry = BirthdayEntry(date: date, data: AppData())
+        entry.empty = .locked
+        return entry
     }
 
     /// Made-up birthdays for the widget gallery.

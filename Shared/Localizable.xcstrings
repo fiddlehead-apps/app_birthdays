@@ -289,6 +289,16 @@
         }
       }
     },
+    "All birthdays are hidden" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Geburtstage sind versteckt"
+          }
+        }
+      }
+    },
     "Allow access in Settings to import birthdays from your contacts." : {
       "localizations" : {
         "de" : {
@@ -398,6 +408,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abbrechen"
+          }
+        }
+      }
+    },
+    "Close" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schließen"
           }
         }
       }
@@ -831,6 +851,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Keine Erinnerungen"
+          }
+        }
+      }
+    },
+    "Not now" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Später"
           }
         }
       }
@@ -1352,6 +1382,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jahr bekannt"
+          }
+        }
+      }
+    },
+    "You can show them again in the app." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In der App kannst du sie wieder zeigen."
           }
         }
       }

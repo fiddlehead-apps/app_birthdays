@@ -26,15 +26,19 @@ nonisolated enum Reminders {
         #endif
     }
 
+    /// Removes only what's no longer planned and adds only what's missing. The IDs change with
+    /// the content, so an ID that's already pending is the same notification. That way the app
+    /// and the widgets can run this at the same time, and being stopped halfway (widgets) never
+    /// loses a reminder that was already there.
     static func reschedule(_ data: AppData, now: Date = .now) async {
         guard await isAllowed() else { return }
         let center = UNUserNotificationCenter.current()
         let planned = Array(plan(data, now: now).prefix(limit))
-        let pending = await center.pendingNotificationRequests().map(\.identifier).filter { $0.hasPrefix(prefix) }
-        guard Set(pending) != Set(planned.map(\.id)) else { return }
+        let pending = Set(await center.pendingNotificationRequests().map(\.identifier).filter { $0.hasPrefix(prefix) })
+        let stale = pending.subtracting(planned.map(\.id))
 
-        center.removePendingNotificationRequests(withIdentifiers: pending)
-        for p in planned {
+        if !stale.isEmpty { center.removePendingNotificationRequests(withIdentifiers: Array(stale)) }
+        for p in planned where !pending.contains(p.id) {
             try? await center.add(UNNotificationRequest(identifier: p.id, content: content(p),
                                                         trigger: trigger(p.fire)))
         }
@@ -126,4 +130,8 @@ nonisolated enum Reminders {
 /// djb2; `String.hashValue` changes on every launch.
 nonisolated func stableHash(_ s: String) -> UInt32 {
     s.unicodeScalars.reduce(UInt32(5381)) { ($0 &<< 5) &+ $0 &+ $1.value }
+}
+
+nonisolated func stableHash(_ data: Data) -> UInt32 {
+    data.reduce(UInt32(5381)) { ($0 &<< 5) &+ $0 &+ UInt32($1) }
 }

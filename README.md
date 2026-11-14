@@ -18,10 +18,15 @@ Kontakte mit Geburtstag. Neue werden in einer Auswahlliste angeboten (alle vorau
 „Keine auswählen“/„Alle auswählen“). Nicht ausgewählte landen direkt bei *Versteckt*, damit
 sie beim nächsten Abgleich nicht wieder angeboten werden. Bekannte Einträge werden still
 aktualisiert (Name, Datum, Foto); Einträge, deren Kontakt oder Geburtstag verschwunden ist,
-fliegen raus. Bei eingeschränktem Kontaktzugriff (iOS 18) wird nichts entfernt.
+fliegen raus. Bei eingeschränktem Kontaktzugriff (iOS 18) wird nichts entfernt. Das passiert
+schon beim Lesen; danach heißt der Knopf oben „Später“ (Neue werden nächstes Mal wieder
+angeboten) bzw. „Schließen“.
 
 **Liste:** heute als große Karten, dann „Nächste 7 Tage“, dann nach Monaten. Wischen nach
-links = verstecken (mit Rückgängig). Antippen = Detail mit Datum, Alter, Erinnerungen.
+links = verstecken (mit Rückgängig), auch bei den Heute-Karten. Antippen = Detail mit Datum,
+Alter, Erinnerungen. Um Mitternacht rückt die Liste weiter, auch wenn die App offen bleibt.
+Passt „20. Oktober · Wird 34“ neben „In 12 Tagen“ nicht in eine Zeile, steht dort
+„20. Okt. · Wird 34“, notfalls das Alter in einer eigenen Zeile.
 
 **Versteckt:** Versteckte Geburtstage bleiben in den Daten, bekommen aber keine
 Erinnerungen und erscheinen nicht in Liste und Widgets. Liste aller versteckten: unten in
@@ -64,8 +69,14 @@ Fenster schließen beendet die App nicht, damit der iCloud-Sync weiterläuft.
 
 iOS hält pro App höchstens 64 geplante Mitteilungen. Die App plant deshalb immer die
 nächsten 60 und füllt nach: bei jeder Änderung, beim Öffnen, per Hintergrundaktualisierung
-und einmal täglich aus den Widgets heraus. Wer die App monatelang nicht öffnet und kein
-Widget nutzt, könnte bei sehr vielen Geburtstagen Lücken bekommen.
+und einmal täglich aus den Widgets heraus (die ihre Timeline nach jeder Mitternacht neu
+holen). Nachgeplant wird nur, was fehlt oder sich geändert hat; bestehende Mitteilungen
+bleiben stehen, damit ein abgebrochenes Nachplanen keine löscht. Wer die App monatelang nicht
+öffnet und kein Widget nutzt, könnte bei sehr vielen Geburtstagen Lücken bekommen.
+
+Die Widgets bekommen ihre Timeline, bevor nachgeplant wird, und werden auch beim Öffnen der
+App neu geladen. Sind alle Geburtstage versteckt, sagen sie das; vor dem ersten Entsperren
+nach einem Neustart zeigen sie nur „Geburtstage“ und versuchen es nach 15 Minuten wieder.
 
 ## Daten
 
@@ -85,13 +96,30 @@ seine Mitteilungen selbst.
   iCloud haben auf einem neuen Gerät erst keine Kontakt-ID; der nächste Kontakte-Abgleich
   ordnet sie über Name und Datum zu. Ohne Zuordnung bleiben sie stehen, nur Geburtstage, deren
   Kontakt *auf diesem Gerät* verschwunden ist, fliegen raus.
-* Wurde derselbe Geburtstag auf zwei Geräten angelegt, bevor sie sich gesehen haben, bleibt
-  der aus iCloud (Abgleich über Name und Datum), der andere wird gelöscht.
-* Konflikte: die neuere Änderung gewinnt (`modified` pro Geburtstag, `settingsModified`).
+* Wurde derselbe Geburtstag auf zwei Geräten angelegt, bevor sie sich gesehen haben (Abgleich
+  über Name und Datum), behalten alle Geräte die Kopie mit der kleineren ID und löschen die
+  andere. Würde jedes Gerät die aus iCloud behalten, könnten zwei Geräte gleichzeitig die
+  jeweils eigene löschen, und der Geburtstag wäre überall weg. War er auf einem der Geräte
+  versteckt, bleibt er versteckt; eigene Erinnerungen der einen Kopie gehen nicht verloren.
+* Konflikte: die neuere Änderung gewinnt (`modified` pro Geburtstag, `settingsModified`, mit
+  Millisekunden). Eine Änderung wird nie früher datiert als die zuletzt gesehene Version,
+  damit eine nachgehende Uhr eine spätere Änderung nicht verlieren lässt.
+* Kontaktfotos rechnet jedes Gerät selbst um; als geändert gilt ein Foto nur, wenn sich das
+  Foto im Kontakt ändert (`photoSource`, nur lokal). Sonst würden die Geräte es bei jedem
+  Abgleich hin- und herschicken.
+* Nach jedem vollständigen Abruf lädt die App hoch, was iCloud noch nicht hat – auch wenn der
+  erste Abgleich beim Einschalten gescheitert ist.
+* Änderungen von anderen Geräten kommen per stiller Push-Mitteilung; weil iOS nicht jede
+  zustellt, holt die Hintergrundaktualisierung (etwa alle 12 Stunden) sie zusätzlich ab, damit
+  Widgets und Erinnerungen ohne Öffnen der App nachziehen. Startet iOS die App im Hintergrund,
+  bevor das iPhone nach einem Neustart entsperrt wurde, ist die Datei noch nicht lesbar: Dann
+  speichert sie nichts, plant nichts um und wartet mit iCloud, bis die Datei lesbar ist, damit
+  die leere Liste die echte nicht überschreibt.
 * Ausschalten fragt, ob die Daten in iCloud bleiben oder gelöscht werden; auf dem Gerät bleibt
   alles. Abmelden, Account-Wechsel oder in iCloud gelöschte Daten schalten den Sync ebenfalls
-  aus, ohne lokal etwas zu löschen. Der Sync-Zustand liegt in
-  `Application Support/CloudSync.json` (nicht in der App Group).
+  aus, ohne lokal etwas zu löschen. Was bei ausgeschaltetem Sync gelöscht wird, merkt sich die
+  App und löscht es beim Wiedereinschalten auch in iCloud, statt es zurückzuholen. Der
+  Sync-Zustand liegt in `Application Support/CloudSync.json` (nicht in der App Group).
 
 ## Sprachen
 
@@ -178,7 +206,7 @@ swift tools/make_mac_icon.swift
 | `Shared/Texts.swift` / `Theme.swift` | gemeinsame Texte, Farben, `Avatar` |
 | `Shared/Platform.swift` | was zwischen iPhone/iPad und Mac abweicht: Bilder, Farben, Systemeinstellungs-Links, Sheet-Größen |
 | `SolaBirthdays/Store.swift` | App-Zustand, Abgleich-Logik, Speichern → Widgets + Erinnerungen + iCloud, Records |
-| `SolaBirthdays/CloudSync.swift` / `CloudSyncToggle.swift` | iCloud-Sync (CKSyncEngine), Schalter mit Status; gleiche Dateien wie in Sola Slideshow |
+| `SolaBirthdays/CloudSync.swift` / `CloudSyncToggle.swift` | iCloud-Sync (CKSyncEngine), Schalter mit Status; aus Sola Slideshow, hier ergänzt um Nach-Upload nach jedem Abruf und Löschungen bei ausgeschaltetem Sync |
 | `SolaBirthdays/ContactsReader.swift` | Kontakte mit Geburtstag lesen |
 | `SolaBirthdays/ListView.swift` | Hauptliste, Heute-Karten, Verstecken mit Rückgängig |
 | `SolaBirthdays/SyncView.swift` | Abgleich und Auswahl neuer Geburtstage |

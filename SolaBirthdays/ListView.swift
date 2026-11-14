@@ -35,6 +35,8 @@ struct ListView: View {
                 ForEach(today) { u in
                     TodayCard(item: u) { sheet = .detail(u.id) }
                         .plainRow(top: 6, bottom: 6)
+                        .swipeActions(edge: .trailing) { hideButton(u.birthday) }
+                        .contextMenu { hideButton(u.birthday) }
                 }
                 // Titles as plain rows rather than section headers, which would stick to the top.
                 ForEach(groups(items.filter { $0.days > 0 }), id: \.title) { group in
@@ -128,7 +130,7 @@ struct ListView: View {
                 .tracking(-1.2)
                 .foregroundStyle(Color.ink)
                 .accessibilityAddTraits(.isHeader)
-            Text(Texts.weekdayDayMonth(.now))
+            Text(Texts.weekdayDayMonth(store.now))
                 .font(.system(size: 17))
                 .foregroundStyle(Color.muted)
         }
@@ -267,7 +269,7 @@ struct ListView: View {
         var out: [Group] = []
         let soon = items.filter { $0.days <= 7 }
         if !soon.isEmpty { out.append(Group(title: String(localized: "Next 7 days"), items: soon)) }
-        let thisYear = Calendar.birthdays.component(.year, from: .now)
+        let thisYear = Calendar.birthdays.component(.year, from: store.now)
         for u in items where u.days > 7 {
             let year = Calendar.birthdays.component(.year, from: u.date)
             let title = year == thisYear ? u.date.formatted(.dateTime.month(.wide))
@@ -291,13 +293,13 @@ struct BirthdayRow: View {
                     Text(item.birthday.name)
                         .font(.system(size: 17, weight: .semibold))
                         .lineLimit(1)
-                    Text(subtitle)
+                    subtitle
                         .font(.system(size: 14))
                         .foregroundStyle(Color.muted)
-                        .lineLimit(1)
                 }
                 Spacer(minLength: 8)
                 daysBadge
+                    .fixedSize()
             }
             .foregroundStyle(Color.ink)
             .padding(.vertical, 10)
@@ -309,10 +311,24 @@ struct BirthdayRow: View {
         .buttonStyle(.plain)
     }
 
-    private var subtitle: String {
-        let date = Texts.dayMonth(item.date)
-        guard let age = item.age else { return date }
-        return "\(date) · \(Texts.turns(age))"
+    /// "20 October · Turns 34"; with a long name for the month or of the days to go,
+    /// "Oct 20 · Turns 34", and if even that is too long, the age on a line of its own.
+    private var subtitle: some View {
+        ViewThatFits(in: .horizontal) {
+            line(Texts.dayMonth(item.date))
+            line(Texts.shortDayMonth(item.date))
+            VStack(alignment: .leading, spacing: 1) {
+                Text(Texts.shortDayMonth(item.date))
+                if let age = item.age { Text(Texts.turns(age)) }
+            }
+            .lineLimit(1)
+        }
+    }
+
+    private func line(_ date: String) -> some View {
+        Text(verbatim: item.age.map { "\(date) · \(Texts.turns($0))" } ?? date)
+            .lineLimit(1)
+            .fixedSize(horizontal: true, vertical: false)
     }
 
     @ViewBuilder private var daysBadge: some View {

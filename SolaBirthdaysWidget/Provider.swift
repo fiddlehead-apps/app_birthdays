@@ -5,32 +5,32 @@ struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> BirthdayEntry { .sample }
 
     func getSnapshot(in context: Context, completion: @escaping (BirthdayEntry) -> Void) {
-        let data = Storage.load()
+        guard let data = Storage.loadIfReadable() else { return completion(.locked(.now)) }
         completion(context.isPreview && data.birthdays.isEmpty ? .sample : BirthdayEntry(date: .now, data: data))
     }
 
-    /// One entry now and one at each of the next seven midnights.
+    /// One entry now and one at each of the next seven midnights. A new timeline is asked for
+    /// after the first midnight, so the widgets reread the data daily and a missed reload lasts
+    /// at most a day; the further entries cover the time until the system gets to it.
     func getTimeline(in context: Context, completion: @escaping (Timeline<BirthdayEntry>) -> Void) {
-        let data = Storage.load()
+        guard let data = Storage.loadIfReadable() else {
+            // The file is locked until the first unlock after a restart. Try again soon instead
+            // of showing an empty widget for a day.
+            completion(Timeline(entries: [.locked(.now)], policy: .after(.now.addingTimeInterval(15 * 60))))
+            return
+        }
         let cal = Calendar.birthdays
         let start = cal.startOfDay(for: .now)
         var entries = [BirthdayEntry(date: .now, data: data)]
         for i in 1...7 {
             if let d = cal.date(byAdding: .day, value: i, to: start) { entries.append(BirthdayEntry(date: d, data: data)) }
         }
-        let timeline = Timeline(entries: entries, policy: .atEnd)
+        let refresh = entries.count > 1 ? entries[1].date.addingTimeInterval(60) : .now.addingTimeInterval(24 * 3600)
+        // Hand over the timeline first: rescheduling can take a while (up to 60 notifications with
+        // photos), and if the extension is stopped before it's done, the widget keeps its old one.
+        completion(Timeline(entries: entries, policy: .after(refresh)))
         // The widgets refresh daily, so they also keep the reminder queue topped up.
-        let done = Done(completion)
-        Task {
-            await Reminders.reschedule(data)
-            done.call(timeline)
-        }
-    }
-
-    private struct Done: @unchecked Sendable {
-        let completion: (Timeline<BirthdayEntry>) -> Void
-        init(_ c: @escaping (Timeline<BirthdayEntry>) -> Void) { completion = c }
-        func call(_ t: Timeline<BirthdayEntry>) { completion(t) }
+        Task { await Reminders.reschedule(data) }
     }
 }
 

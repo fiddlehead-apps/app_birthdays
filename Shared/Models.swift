@@ -22,6 +22,11 @@ nonisolated struct Birthday: Codable, Identifiable, Hashable, Sendable {
     var reminders: [Int]?
     /// Last change of a synced field, for resolving conflicts with iCloud.
     var modified = Date()
+    /// Fingerprint of the contact photo this device last saved, to notice when it really
+    /// changed. Not synced: each device re-encodes photos itself, so comparing the stored
+    /// JPEGs would see a change on every contacts sync. 0 = the contact has no photo,
+    /// nil = not recorded on this device yet.
+    var photoSource: UInt32?
 
     init(contactID: String? = nil, name: String, shortName: String, month: Int, day: Int, year: Int?) {
         self.contactID = contactID
@@ -48,9 +53,14 @@ nonisolated struct Birthday: Codable, Identifiable, Hashable, Sendable {
         hidden = try c.decodeIfPresent(Bool.self, forKey: .hidden) ?? false
         reminders = try c.decodeIfPresent([Int].self, forKey: .reminders)
         modified = try c.decodeIfPresent(Date.self, forKey: .modified) ?? .distantPast
+        photoSource = try c.decodeIfPresent(UInt32.self, forKey: .photoSource)
     }
 
     var isManual: Bool { !fromContacts }
+
+    /// Marks a change. Never earlier than the last known change, so an edit made after seeing
+    /// another device's version wins even if this device's clock is behind.
+    mutating func touch() { modified = Date.changed(after: modified) }
 
     /// Same person and day, for matching birthdays across devices.
     func matches(name other: String, month m: Int, day d: Int) -> Bool {
@@ -83,6 +93,9 @@ nonisolated struct AppData: Codable, Sendable {
 
     func reminders(for b: Birthday) -> [Int] { b.reminders ?? defaultReminders }
 
+    /// Marks a change of the reminder settings (see `Birthday.touch`).
+    mutating func touchSettings() { settingsModified = Date.changed(after: settingsModified) }
+
     /// Visible birthdays by next occurrence, then name.
     func upcoming(from now: Date = .now) -> [Upcoming] {
         birthdays.filter { !$0.hidden }
@@ -110,6 +123,13 @@ nonisolated struct Upcoming: Identifiable, Hashable, Sendable {
         self.date = date
         days = cal.dateComponents([.day], from: today, to: date).day ?? 0
         age = b.age(on: date)
+    }
+}
+
+nonisolated extension Date {
+    /// Now, or just after `last` if this device's clock is behind it.
+    static func changed(after last: Date) -> Date {
+        max(.now, last.addingTimeInterval(0.001))
     }
 }
 

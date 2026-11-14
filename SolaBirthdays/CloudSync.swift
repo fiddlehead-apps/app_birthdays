@@ -63,7 +63,13 @@ final class CloudSync {
         var engine: CKSyncEngine.State.Serialization?
         var systemFields: [String: Data] = [:]
         var lastSync: Date?
+        /// Items deleted while sync was off. Turning it on again deletes them in iCloud instead
+        /// of bringing them back. Optional so state files from before still decode.
+        var tombstones: [String]?
     }
+
+    /// Enough for any realistic number of deletions between turning sync off and on again.
+    private static let maxTombstones = 1000
 
     /// - Parameters:
     ///   - zone: name of the record zone, one per app.
@@ -94,9 +100,14 @@ final class CloudSync {
         engine.state.add(pendingRecordZoneChanges: names.map { .saveRecord(recordID($0)) })
     }
 
-    /// Queues local deletions. Does nothing while sync is off.
+    /// Queues local deletions. While sync is off, remembers them for when it's turned on again.
     func deleted(_ names: [String]) {
-        guard let engine, !names.isEmpty else { return }
+        guard !names.isEmpty, Self.isAvailable else { return }
+        guard let engine else {
+            saved.tombstones = Array(((saved.tombstones ?? []) + names).suffix(Self.maxTombstones))
+            persist()
+            return
+        }
         let ids = names.map(recordID)
         engine.state.remove(pendingRecordZoneChanges: ids.map { .saveRecord($0) })
         engine.state.add(pendingRecordZoneChanges: ids.map { .deleteRecord($0) })
@@ -129,21 +140,14 @@ final class CloudSync {
             return
         }
 
-        saved = Saved()
+        saved = Saved(tombstones: saved.tombstones)
         saved.on = true
         isOn = true
         persist()
         start()
-        guard let engine else { return }
-        do {
-            // Fetch first, so items that are already in iCloud aren't uploaded again.
-            try await engine.fetchChanges()
-            engine.state.add(pendingDatabaseChanges: [.saveZone(CKRecordZone(zoneID: zoneID))])
-            uploadAll(onlyNew: true)
-            try await engine.sendChanges()
-        } catch {
-            report(error)
-        }
+        // Fetch first, so items that are already in iCloud aren't uploaded again. If that fails,
+        // the next sync uploads them (see syncNow).
+        await syncNow()
     }
 
     /// Stops syncing. The data stays on this device; with `deleteFromICloud` the copy in
@@ -172,9 +176,21 @@ final class CloudSync {
         guard let engine else { return }
         do {
             try await engine.fetchChanges()
+            afterFetch()
             try await engine.sendChanges()
         } catch {
             report(error)
+        }
+    }
+
+    /// After a complete fetch everything in iCloud is known here: upload what iCloud doesn't
+    /// have yet (also catches a first upload that failed when sync was turned on), and forget the
+    /// tombstones, whose records were either deleted in applyFetched or were never in iCloud.
+    private func afterFetch() {
+        uploadAll(onlyNew: true)
+        if saved.tombstones != nil {
+            saved.tombstones = nil
+            persist()
         }
     }
 
@@ -194,7 +210,7 @@ final class CloudSync {
         let old = engine
         engine = nil
         await old?.cancelOperations()
-        saved = Saved()
+        saved = Saved(tombstones: saved.tombstones)
         persist()
         isOn = false
         lastSync = nil
@@ -206,10 +222,16 @@ final class CloudSync {
         status = .problem(reason)
     }
 
+    /// Queues every local item for upload, or with `onlyNew` the ones iCloud doesn't have yet,
+    /// together with the zone they go into.
     private func uploadAll(onlyNew: Bool) {
         guard let engine, let store else { return }
         let names = store.allRecordNames().filter { !onlyNew || saved.systemFields[$0] == nil }
-        engine.state.add(pendingRecordZoneChanges: names.map { .saveRecord(recordID($0)) })
+        let changes = names.map { CKSyncEngine.PendingRecordZoneChange.saveRecord(recordID($0)) }
+            .filter { !engine.state.pendingRecordZoneChanges.contains($0) }
+        guard !changes.isEmpty else { return }
+        engine.state.add(pendingDatabaseChanges: [.saveZone(CKRecordZone(zoneID: zoneID))])
+        engine.state.add(pendingRecordZoneChanges: changes)
     }
 
     private func persist() {
@@ -218,6 +240,7 @@ final class CloudSync {
     }
 
     private func report(_ error: Error) {
+        if error is CancellationError { return }  // e.g. a background refresh that ran out of time
         switch (error as? CKError)?.code {
         case .networkUnavailable, .networkFailure, .serviceUnavailable, .requestRateLimited, .zoneBusy:
             status = .problem(String(localized: "Waiting for a connection to iCloud."))
@@ -332,8 +355,14 @@ extension CloudSync: CKSyncEngineDelegate {
         guard let store, let engine else { return }
         var resend: [CKSyncEngine.PendingRecordZoneChange] = []
         var superseded: [CKSyncEngine.PendingRecordZoneChange] = []
+        let tombstones = Set(saved.tombstones ?? [])
         for modification in changes.modifications where modification.record.recordID.zoneID == zoneID {
             let record = modification.record
+            if tombstones.contains(record.recordID.recordName) {
+                // Deleted here while sync was off: delete it in iCloud too.
+                resend.append(.deleteRecord(record.recordID))
+                continue
+            }
             saved.systemFields[record.recordID.recordName] = record.systemFields
             if store.merge(record) {
                 if !pending(record.recordID) { resend.append(.saveRecord(record.recordID)) }

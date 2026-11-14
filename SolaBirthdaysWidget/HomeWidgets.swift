@@ -48,12 +48,24 @@ struct HomeWidgetView: View {
                 .font(.system(size: 26, weight: .semibold))
                 .foregroundStyle(Color.brand)
             Spacer(minLength: 0)
-            Text("No birthdays yet")
-                .font(.system(size: 15, weight: .bold))
-                .foregroundStyle(Color.ink)
-            Text("Open the app to import them from your contacts.")
-                .font(.system(size: 12))
-                .foregroundStyle(Color.muted)
+            Group {
+                switch entry.empty {
+                case .noBirthdays: Text("No birthdays yet")
+                case .allHidden: Text("All birthdays are hidden")
+                case .locked: Text("Birthdays")
+                }
+            }
+            .font(.system(size: 15, weight: .bold))
+            .foregroundStyle(Color.ink)
+            Group {
+                switch entry.empty {
+                case .noBirthdays: Text("Open the app to import them from your contacts.")
+                case .allHidden: Text("You can show them again in the app.")
+                case .locked: EmptyView()
+                }
+            }
+            .font(.system(size: 12))
+            .foregroundStyle(Color.muted)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
     }

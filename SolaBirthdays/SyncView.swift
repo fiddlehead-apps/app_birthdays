@@ -45,7 +45,14 @@ struct SyncView: View {
             .inlineTitle()
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
+                    // Updates and removals are already saved once the review shows, so only
+                    // the reading can be cancelled. Afterwards it closes, and new birthdays
+                    // that weren't added are offered again next time.
+                    switch phase {
+                    case .review(let r) where !r.new.isEmpty: Button("Not now") { dismiss() }
+                    case .review: Button("Close") { dismiss() }
+                    default: Button("Cancel") { dismiss() }
+                    }
                 }
             }
         }

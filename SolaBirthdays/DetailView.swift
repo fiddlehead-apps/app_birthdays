@@ -41,7 +41,7 @@ private struct DetailContent: View {
     }
 
     private func content(_ b: Birthday) -> some View {
-        let next = Upcoming(b, from: .now)
+        let next = Upcoming(b, from: store.now)
         return ScrollView {
             VStack(spacing: 0) {
                 Avatar(birthday: b, size: 116)

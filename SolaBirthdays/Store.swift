@@ -1,6 +1,7 @@
 import CloudKit
 import Foundation
 import Observation
+import os
 import UserNotifications
 import WidgetKit
 
@@ -8,7 +9,7 @@ import WidgetKit
 /// reschedules the reminders and, if iCloud sync is on, queues the upload.
 @Observable
 final class Store {
-    private(set) var data = Storage.load()
+    private(set) var data: AppData
     private(set) var notifications: UNAuthorizationStatus = .authorized
 
     /// Opt-in iCloud sync; does nothing until the user turns it on.
@@ -18,11 +19,28 @@ final class Store {
         return url
     }())
 
+    /// The moment "today" and the days to go are counted from. Moves on at midnight and when
+    /// the app comes back, so a window left open overnight (Mac) doesn't show yesterday.
+    private(set) var now = Date.now
+
+    /// False while the file couldn't be read (the app was started in the background before the
+    /// first unlock after a restart). Until then nothing is saved and iCloud waits, so the empty
+    /// list shown meanwhile never replaces the real one.
+    @ObservationIgnored private var loaded = false
+
     init() {
-        cloud.attach(self)
+        let file = Storage.loadIfReadable()
+        data = file ?? AppData()
+        loaded = file != nil
+        if loaded { cloud.attach(self) }
+        dayObserver = NotificationCenter.default.addObserver(forName: .NSCalendarDayChanged, object: nil, queue: .main) { [weak self] _ in
+            MainActor.assumeIsolated { self?.now = .now }
+        }
     }
 
-    var visible: [Upcoming] { data.upcoming() }
+    @ObservationIgnored private var dayObserver: NSObjectProtocol?
+
+    var visible: [Upcoming] { data.upcoming(from: now) }
 
     var hidden: [Birthday] {
         data.birthdays.filter(\.hidden).sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
@@ -30,8 +48,29 @@ final class Store {
 
     func birthday(_ id: UUID) -> Birthday? { data.birthdays.first { $0.id == id } }
 
-    /// Re-reads the file, e.g. when the app comes back to the foreground.
-    func reload() { data = Storage.load() }
+    /// Re-reads the file when the app comes back to the foreground, and refreshes the widgets
+    /// so opening the app always fixes one that missed a reload.
+    func reload() {
+        if let file = Storage.loadIfReadable() {
+            data = file
+            if !loaded {
+                loaded = true
+                cloud.attach(self)
+            }
+        }
+        now = .now
+        WidgetCenter.shared.reloadAllTimelines()
+    }
+
+    /// The background refresh (iPhone, about twice a day): gets the changes from iCloud, so the
+    /// widgets and reminders follow changes made on another device without opening the app.
+    /// Silent pushes do that too, but iOS doesn't deliver all of them.
+    func backgroundRefresh() async {
+        reload()
+        guard loaded else { return }
+        await cloud.syncNow()
+        await refreshReminders()
+    }
 
     // MARK: Changes
 
@@ -57,7 +96,7 @@ final class Store {
     /// Adds or updates a birthday entered by hand.
     func saveManual(_ b: Birthday) {
         var b = b
-        b.modified = .now
+        b.touch()
         if let i = data.birthdays.firstIndex(where: { $0.id == b.id }) {
             data.birthdays[i] = b
         } else {
@@ -96,7 +135,6 @@ final class Store {
             matched.insert(data.birthdays[i].id)
             var b = data.birthdays[i]
             let before = b
-            let photoBefore = try? Data(contentsOf: Storage.photoURL(b.id))
             b.contactID = c.contactID
             b.fromContacts = true
             b.name = c.name
@@ -104,10 +142,20 @@ final class Store {
             b.month = c.month
             b.day = c.day
             b.year = c.year
-            b.hasPhoto = Storage.savePhoto(c.photo, for: b.id)
-            let photoChanged = b.hasPhoto && photoBefore != (try? Data(contentsOf: Storage.photoURL(b.id)))
+            // Only touch the photo when the contact's photo itself changed. A photo this device
+            // hasn't recorded yet (it came from iCloud, or an older version saved it) is kept:
+            // replacing it would upload it back and forth between the devices.
+            var photoChanged = false
+            let source = Self.photoSource(c.photo)
+            if source != b.photoSource {
+                if !(b.photoSource == nil && b.hasPhoto) {
+                    b.hasPhoto = Storage.savePhoto(c.photo, for: b.id)
+                    photoChanged = b.hasPhoto
+                }
+                b.photoSource = source
+            }
             if b.synced != before.synced || photoChanged {
-                b.modified = .now
+                b.touch()
                 changed.append(b.id)
                 result.updated += 1
             }
@@ -146,6 +194,9 @@ final class Store {
         return result
     }
 
+    /// Fingerprint of a contact photo for `Birthday.photoSource`; 0 = the contact has none.
+    private static func photoSource(_ photo: Data?) -> UInt32 { photo.map(stableHash) ?? 0 }
+
     /// Adds new contacts: the chosen ones to the list, the others straight to hidden,
     /// so the next sync doesn't offer them again.
     func add(_ contacts: [ContactBirthday], chosen: Set<String>) {
@@ -157,6 +208,7 @@ final class Store {
                              month: c.month, day: c.day, year: c.year)
             b.hidden = !chosen.contains(c.contactID)
             b.hasPhoto = Storage.savePhoto(c.photo, for: b.id)
+            b.photoSource = Self.photoSource(c.photo)
             data.birthdays.append(b)
             added.append(b.id)
         }
@@ -168,12 +220,12 @@ final class Store {
     private func change(_ id: UUID, _ edit: (inout Birthday) -> Void) {
         guard let i = data.birthdays.firstIndex(where: { $0.id == id }) else { return }
         edit(&data.birthdays[i])
-        data.birthdays[i].modified = .now
+        data.birthdays[i].touch()
         save(changed: [id])
     }
 
     private func settingsChanged() {
-        data.settingsModified = .now
+        data.touchSettings()
         save()
         cloud.changed([Self.settingsRecord])
     }
@@ -185,7 +237,13 @@ final class Store {
     }
 
     private func saveLocally() {
-        try? Storage.save(data)
+        guard loaded else { return }
+        do {
+            try Storage.save(data)
+        } catch {
+            // The widgets and the next launch would read the old file.
+            Self.log.error("Saving the birthdays failed: \(error.localizedDescription, privacy: .public)")
+        }
         WidgetCenter.shared.reloadAllTimelines()
         reschedule()
     }
@@ -205,10 +263,13 @@ final class Store {
 
     @ObservationIgnored private var rescheduling: Task<Void, Never>?
 
+    private static let log = Logger(subsystem: Bundle.main.bundleIdentifier ?? "SolaBirthdays", category: "Store")
+
     /// Tops up the reminders and checks whether notifications are allowed;
     /// called whenever the app becomes active.
     func refreshReminders() async {
         notifications = await UNUserNotificationCenter.current().notificationSettings().authorizationStatus
+        guard loaded else { return }  // an empty list would cancel all reminders
         await reschedule().value
     }
 
@@ -272,14 +333,30 @@ extension Store: CloudSyncStore {
         let e = r.encryptedValues
         guard let name = e["name"] as? String, let month = e["month"] as? Int, let day = e["day"] as? Int else { return false }
 
+        let remoteReminders = (e["reminders"] as? Data).flatMap { try? JSONDecoder().decode([Int].self, from: $0) }
         var index = data.birthdays.firstIndex { $0.id == uuid }
         if let i = index, data.birthdays[i].modified > remote { return true }
+        var loser: Birthday?
         if index == nil, let twin = data.birthdays.firstIndex(where: { $0.matches(name: name, month: month, day: day) }) {
-            // The same birthday was added on two devices before syncing: keep the iCloud one.
-            let old = data.birthdays[twin].id
-            Storage.removePhoto(old)
+            // The same birthday was added on two devices before syncing. Every device keeps the
+            // copy with the smaller ID and deletes the other. If each kept the one from iCloud
+            // instead, two devices could delete each other's copy and lose it on both.
+            let local = data.birthdays[twin]
+            if local.id.uuidString < uuid.uuidString {
+                cloud.deleted([uuid.uuidString])
+                var b = local
+                b.inherit(hidden: r["hidden"] as? Bool ?? false, reminders: remoteReminders)
+                if b.synced != local.synced {
+                    b.touch()
+                    data.birthdays[twin] = b
+                    cloud.changed([b.id.uuidString])
+                }
+                return false
+            }
+            loser = local
+            Storage.removePhoto(local.id)
             data.birthdays[twin].id = uuid
-            cloud.deleted([old.uuidString])
+            cloud.deleted([local.id.uuidString])
             index = twin
         }
 
@@ -290,7 +367,7 @@ extension Store: CloudSyncStore {
         b.month = month
         b.day = day
         b.year = e["year"] as? Int
-        b.reminders = (e["reminders"] as? Data).flatMap { try? JSONDecoder().decode([Int].self, from: $0) }
+        b.reminders = remoteReminders
         b.fromContacts = r["fromContacts"] as? Bool ?? false
         b.hidden = r["hidden"] as? Bool ?? false
         b.modified = remote
@@ -301,8 +378,15 @@ extension Store: CloudSyncStore {
             Storage.removePhoto(uuid)
             b.hasPhoto = false
         }
+        var upload = false
+        if let loser {
+            let before = b.synced
+            b.inherit(hidden: loser.hidden, reminders: loser.reminders)
+            upload = b.synced != before
+            if upload { b.touch() }
+        }
         if let i = index { data.birthdays[i] = b } else { data.birthdays.append(b) }
-        return false
+        return upload
     }
 
     func remove(_ id: CKRecord.ID) {
@@ -319,4 +403,12 @@ extension Store: CloudSyncStore {
 private extension Birthday {
     /// The fields that sync; a change in any of them is worth an upload.
     var synced: [AnyHashable] { [name, shortName, month, day, year, hasPhoto, hidden, reminders, fromContacts] }
+
+    /// What the surviving copy of a birthday added on two devices takes from the other one.
+    /// Both devices end up with the same result, whichever copy they had. Hiding is a choice;
+    /// showing is just the default for new birthdays. Own reminders beat the defaults.
+    mutating func inherit(hidden: Bool, reminders: [Int]?) {
+        self.hidden = self.hidden || hidden
+        self.reminders = self.reminders ?? reminders
+    }
 }

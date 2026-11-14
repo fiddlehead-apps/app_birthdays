@@ -27,13 +27,17 @@ nonisolated enum Storage {
         return url
     }
 
-    static func load() -> AppData {
-        guard let raw = try? Data(contentsOf: dataURL) else { return AppData() }
+    static func load() -> AppData { loadIfReadable() ?? AppData() }
+
+    /// nil if the file exists but can't be read right now, e.g. before the first unlock after a
+    /// restart. No file yet is an empty list.
+    static func loadIfReadable() -> AppData? {
+        guard FileManager.default.fileExists(atPath: dataURL.path(percentEncoded: false)) else { return AppData() }
+        guard let raw = try? Data(contentsOf: dataURL) else { return nil }
         if let data = try? decoder.decode(AppData.self, from: raw) { return data }
         // The next save would overwrite it with an empty list, so keep a copy to recover from,
         // named by its content so loading it again (widgets, every launch) doesn't pile up copies.
-        let hash = raw.reduce(UInt32(5381)) { ($0 &<< 5) &+ $0 &+ UInt32($1) }
-        try? FileManager.default.copyItem(at: dataURL, to: folder.appending(path: "birthdays-unreadable-\(hash).json"))
+        try? FileManager.default.copyItem(at: dataURL, to: folder.appending(path: "birthdays-unreadable-\(stableHash(raw)).json"))
         return AppData()
     }
 
@@ -77,16 +81,29 @@ nonisolated enum Storage {
         return CGImageDestinationFinalize(dest) ? out as Data : nil
     }
 
+    /// ISO 8601 with milliseconds, like the timestamps in iCloud, so comparing a change time
+    /// that went through this file with one from iCloud doesn't lose the fraction.
+    private static let precise = Date.ISO8601FormatStyle(includingFractionalSeconds: true)
+
     private static var encoder: JSONEncoder {
         let e = JSONEncoder()
         e.outputFormatting = [.prettyPrinted, .sortedKeys]
-        e.dateEncodingStrategy = .iso8601
+        e.dateEncodingStrategy = .custom { date, encoder in
+            var c = encoder.singleValueContainer()
+            try c.encode(precise.format(date))
+        }
         return e
     }
 
+    /// Reads both, with milliseconds and the whole seconds older versions wrote. The dates are
+    /// only change times, so one that can't be read counts as long ago rather than making the
+    /// whole file unreadable.
     private static var decoder: JSONDecoder {
         let d = JSONDecoder()
-        d.dateDecodingStrategy = .iso8601
+        d.dateDecodingStrategy = .custom { decoder in
+            let text = try decoder.singleValueContainer().decode(String.self)
+            return (try? precise.parse(text)) ?? (try? Date.ISO8601FormatStyle().parse(text)) ?? .distantPast
+        }
         return d
     }
 }
