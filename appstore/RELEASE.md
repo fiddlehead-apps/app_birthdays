@@ -1,4 +1,4 @@
-# Releasing Sola Birthdays to the App Store
+ # Releasing Sola Birthdays to the App Store
 
 This guide covers a first release of Sola Birthdays (iPhone, iPad and Mac, one App Store
 record) and every update after it. The texts to paste into App Store Connect are in
@@ -36,9 +36,8 @@ can't sign iCloud or push notifications and can't upload to App Store Connect.
    SOLA_ICLOUD = YES
    ```
 
-   This file currently says `SOLA_TEAM = Z4Z62632W2`, `SOLA_ICLOUD = YES`. The README calls
-   `Z4Z62632W2` the free Personal Team. If your paid team has a different ID, put that one
-   here, otherwise signing with iCloud and every upload fail.
+   This is already set up: `SOLA_TEAM = Z4Z62632W2` (the paid fiddlehead team, also the
+   default in `Config/Config.xcconfig`) and `SOLA_ICLOUD = YES`.
 3. In Xcode open **Settings → Accounts** and check that the Apple ID of the paid team is
    signed in.
 

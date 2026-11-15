@@ -146,9 +146,11 @@ xcodebuild -project SolaBirthdays.xcodeproj -scheme SolaBirthdays -destination '
 ### Aufs eigene iPhone
 
 Team und Bundle-ID (`eu.fiddlehead.sola.birthdays`) kommen aus `Config/Config.xcconfig`.
-Signiert mit dem kostenlosen Personal Team (`Z4Z62632W2`), läuft also **7 Tage**, danach
-neu bauen und installieren – die Daten bleiben. App und Widget brauchen die App Group,
-die Xcode beim ersten Bauen mit `-allowProvisioningUpdates` anlegt.
+Signiert mit dem bezahlten fiddlehead-Team (`Z4Z62632W2`, Apple Developer Program); ein
+so signierter Build läuft ein Jahr. Wer die App mit dem kostenlosen Personal Team baut
+(eigene `SOLA_TEAM`, ohne iCloud), muss sie alle **7 Tage** neu bauen und installieren –
+die Daten bleiben. App und Widget brauchen die App Group, die Xcode beim ersten Bauen mit
+`-allowProvisioningUpdates` anlegt.
 
 ```bash
 xcodebuild -project SolaBirthdays.xcodeproj -scheme SolaBirthdays -configuration Release -destination 'id=00008150-000655C92E20401C' -derivedDataPath /tmp/birthdays-device -allowProvisioningUpdates build
