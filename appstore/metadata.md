@@ -162,6 +162,8 @@ Damit das Fenster aktiv aussieht (farbige Fensterknöpfe), muss die App vorne se
 
 ## Vor dem Einreichen
 
+Schritt für Schritt: [`RELEASE.md`](RELEASE.md).
+
 - In App Store Connect unter Business den **EU-Händlerstatus (DSA)** angeben, sonst erscheint die App in der EU nicht.
 - Buildnummer erhöhen: `./build.sh --bump` (jeder Upload, auch für TestFlight, braucht eine höhere; iPhone und Mac dürfen dieselbe haben).
 - Archiv bauen: Xcode → Product → Archive (Release, Schema der App) → Distribute App → App Store Connect.

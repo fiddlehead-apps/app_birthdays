@@ -174,6 +174,9 @@ SOLA_ICLOUD = YES
 oder einmalig `../build-sola-apps.sh --icloud`. Vor TestFlight/App Store im CloudKit
 Dashboard das Schema nach Production deployen.
 
+Die komplette Anleitung für den App Store (iCloud einrichten, Schema deployen, Archiv,
+TestFlight, Einreichen) steht in [`appstore/RELEASE.md`](appstore/RELEASE.md).
+
 Vor jedem Upload zu App Store Connect (auch TestFlight) die Buildnummer erhöhen und den
 Commit mitnehmen:
 
