@@ -150,14 +150,15 @@ Signiert mit dem bezahlten fiddlehead-Team (`Z4Z62632W2`, Apple Developer Progra
 so signierter Build läuft ein Jahr. Wer die App mit dem kostenlosen Personal Team baut
 (eigene `SOLA_TEAM`, ohne iCloud), muss sie alle **7 Tage** neu bauen und installieren –
 die Daten bleiben. App und Widget brauchen die App Group, die Xcode beim ersten Bauen mit
-`-allowProvisioningUpdates` anlegt.
+`-allowProvisioningUpdates` anlegt. `./build.sh` erledigt das Folgende in einem Schritt;
+von Hand die Geräte-ID aus `xcrun devicectl list devices` einsetzen:
 
 ```bash
-xcodebuild -project SolaBirthdays.xcodeproj -scheme SolaBirthdays -configuration Release -destination 'id=00008150-000655C92E20401C' -derivedDataPath /tmp/birthdays-device -allowProvisioningUpdates build
+xcodebuild -project SolaBirthdays.xcodeproj -scheme SolaBirthdays -configuration Release -destination 'id=<device-id>' -derivedDataPath /tmp/birthdays-device -allowProvisioningUpdates build
 ```
 
 ```bash
-xcrun devicectl device install app --device 00008150-000655C92E20401C "/tmp/birthdays-device/Build/Products/Release-iphoneos/Sola Birthdays.app"
+xcrun devicectl device install app --device <device-id> "/tmp/birthdays-device/Build/Products/Release-iphoneos/Sola Birthdays.app"
 ```
 
 ### iCloud

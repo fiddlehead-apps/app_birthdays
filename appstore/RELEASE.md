@@ -188,7 +188,7 @@ Environment variables:
 Examples:
 
 ```bash
-DEVICE_ID=00008150-000655C92E20401C ./build.sh
+DEVICE_ID=<device-id> ./build.sh
 ./build.sh --bump --mac       # raise the build number, then build the Mac app
 ```
 
