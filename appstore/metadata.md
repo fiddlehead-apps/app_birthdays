@@ -4,20 +4,20 @@ Texte zum Einfügen in App Store Connect. Zeichenlimits sind geprüft (Name/Unte
 
 ## Allgemein
 
-| Feld | Wert |
-| --- | --- |
-| Bundle-ID | `eu.fiddlehead.sola.birthdays` |
-| SKU | `eu.fiddlehead.sola.birthdays` |
-| Plattformen | iPhone, iPad, Mac (gleiche Bundle-ID, ein Kauf für alle) |
-| Primärsprache | Deutsch (weitere: Englisch) |
-| Kategorie | Lifestyle |
-| Zweite Kategorie | Produktivität (Productivity) |
-| Preis | Kostenlos |
-| Copyright | 2026 Christoph Schneider |
-| Support-URL | https://fiddlehead.eu/sola-birthdays/support/ |
-| Marketing-URL | https://fiddlehead.eu/sola-birthdays/ |
-| Datenschutz-URL | https://fiddlehead.eu/sola-birthdays/privacy/ |
-| Verschlüsselung | Im Info.plist erledigt (`ITSAppUsesNonExemptEncryption = NO`) |
+| Feld             | Wert                                                          |
+| ---------------- | ------------------------------------------------------------- |
+| Bundle-ID        | `eu.fiddlehead.sola.birthdays`                                |
+| SKU              | `eu.fiddlehead.sola.birthdays`                                |
+| Plattformen      | iPhone, iPad, Mac (gleiche Bundle-ID, ein Kauf für alle)      |
+| Primärsprache    | Deutsch (weitere: Englisch)                                   |
+| Kategorie        | Lifestyle                                                     |
+| Zweite Kategorie | Produktivität (Productivity)                                  |
+| Preis            | Kostenlos                                                     |
+| Copyright        | 2026 Christoph Schneider                                      |
+| Support-URL      | https://fiddlehead.eu/sola-birthdays/support/                 |
+| Marketing-URL    | https://fiddlehead.eu/sola-birthdays/                         |
+| Datenschutz-URL  | https://fiddlehead.eu/sola-birthdays/privacy/                 |
+| Verschlüsselung  | Im Info.plist erledigt (`ITSAppUsesNonExemptEncryption = NO`) |
 
 ## App-Datenschutz
 
@@ -133,7 +133,7 @@ English: No sign-in needed. The app works without contacts access: tap "Add by h
 
 ## Screenshots
 
-In `appstore/screenshots/<sprache>/`, in der Reihenfolge der Nummern hochladen. Größen: iPhone 6,9" (1320 × 2868), iPad 13" (2064 × 2752), Mac (2880 × 1800).
+In `appstore/screenshots/<sprache>/`, in der Reihenfolge der Nummern hochladen. Größen: iPhone 6,9" (1320 × 2868, `iphone-*`), iPhone 6,3" (1206 × 2622, `iphone63-*`, aus den 6,9"-Bildern verkleinert), iPad 13" (2064 × 2752), Mac (2880 × 1800).
 
 Entstanden mit Demodaten: Debug-Build mit dem Startargument `-demoData YES` (siehe `DemoData.swift`; im Release-Build nicht enthalten). Alle Namen und Bilder sind erfunden. iPhone und iPad im Simulator; die Mac-Bilder zeichnet die App selbst (Fenster auf hellem Hintergrund, braucht keine Bildschirmaufnahme-Erlaubnis), getrennt von den echten Daten und ohne die Erinnerungen anzufassen:
 
@@ -150,6 +150,9 @@ Damit das Fenster aktiv aussieht (farbige Fensterknöpfe), muss die App vorne se
 - `screenshots/de/iphone-1.png`
 - `screenshots/de/iphone-2.png`
 - `screenshots/de/iphone-3.png`
+- `screenshots/de/iphone63-1.png`
+- `screenshots/de/iphone63-2.png`
+- `screenshots/de/iphone63-3.png`
 - `screenshots/de/mac-1.png`
 - `screenshots/de/mac-2.png`
 - `screenshots/en/ipad-1.png`
@@ -157,6 +160,9 @@ Damit das Fenster aktiv aussieht (farbige Fensterknöpfe), muss die App vorne se
 - `screenshots/en/iphone-1.png`
 - `screenshots/en/iphone-2.png`
 - `screenshots/en/iphone-3.png`
+- `screenshots/en/iphone63-1.png`
+- `screenshots/en/iphone63-2.png`
+- `screenshots/en/iphone63-3.png`
 - `screenshots/en/mac-1.png`
 - `screenshots/en/mac-2.png`
 

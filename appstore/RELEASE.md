@@ -252,8 +252,9 @@ At <https://appstoreconnect.apple.com>:
 6. Version page **iOS App 1.0**, for German and English each:
    - Promotional text, description, keywords, support URL and marketing URL from
      `metadata.md`.
-   - Screenshots: **iPhone 6.9"**: `iphone-1…3.png`; **iPad 13"**: `ipad-1…2.png`. Drag
-     them in in the order of their numbers.
+   - Screenshots: **iPhone 6.9"**: `iphone-1…3.png`; **iPhone 6.3"** (if App Store Connect
+     asks for it): `iphone63-1…3.png`; **iPad 13"**: `ipad-1…2.png`. Drag them in in the
+     order of their numbers.
    - Copyright: `2026 Christoph Schneider`.
    - **App Review Information**: untick "Sign-in required", add contact details, paste the
      notes from `metadata.md`.
