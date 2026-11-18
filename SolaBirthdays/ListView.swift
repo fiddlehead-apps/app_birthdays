@@ -8,6 +8,8 @@ struct ListView: View {
 
     @State private var sheet: Sheet?
     @State private var undo: Birthday?
+    @State private var query = ""
+    @FocusState private var searching: Bool
     @Environment(\.openURL) private var openURL
 
     enum Sheet: Identifiable, Equatable {
@@ -24,11 +26,16 @@ struct ListView: View {
     }
 
     var body: some View {
-        let items = store.visible
+        let all = store.visible
+        let term = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        let items = term.isEmpty ? all : all.filter { $0.birthday.name.localizedStandardContains(term) }
         List {
             header
-            if items.isEmpty {
+            if !all.isEmpty { searchField }
+            if all.isEmpty {
                 emptyState
+            } else if items.isEmpty {
+                noResults(term)
             } else {
                 if showsRemindersOff { remindersOffBanner }
                 let today = items.filter { $0.days == 0 }
@@ -135,6 +142,43 @@ struct ListView: View {
                 .foregroundStyle(Color.muted)
         }
         .plainRow(top: 4, bottom: 14)
+    }
+
+    /// Case- and diacritic-insensitive match anywhere in the name.
+    private var searchField: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "magnifyingglass")
+                .foregroundStyle(Color.muted)
+            TextField("Search", text: $query)
+                .textFieldStyle(.plain)
+                .font(.system(size: 17))
+                .focused($searching)
+                .submitLabel(.search)
+                #if os(iOS)
+                .textInputAutocapitalization(.never)
+                #endif
+                .autocorrectionDisabled()
+            if !query.isEmpty {
+                Button { query = "" } label: {
+                    Image(systemName: "xmark.circle.fill").foregroundStyle(Color.muted)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Clear search")
+            }
+        }
+        .foregroundStyle(Color.ink)
+        .padding(.vertical, 10)
+        .padding(.horizontal, 14)
+        .background(Color.surface, in: .rect(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(Color.line, lineWidth: 1.5))
+        .plainRow(top: 0, bottom: 10)
+    }
+
+    private func noResults(_ term: String) -> some View {
+        Text("No birthdays match “\(term)”.")
+            .font(.system(size: 17))
+            .foregroundStyle(Color.muted)
+            .plainRow(top: 12, bottom: 12)
     }
 
     private var emptyState: some View {
